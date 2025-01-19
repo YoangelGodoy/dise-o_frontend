@@ -1,0 +1,108 @@
+// Here you can add other styles
+
+.bg-primary {
+    background-color: #004186de !important;
+}
+.simplebar-content .active{
+    background-color:#022a55de !important ;
+}
+.simplebar-content .nav-link:hover{
+    background-color: #022a55de !important;
+}
+.update{
+    width: 2.6cm;
+    color: white;
+    background-color: #004186de;
+    display: table-row;
+    margin-right: 0.3cm;
+}
+:hover.update{
+    background-color: #013063de;
+    color: white;
+}
+
+.delete{
+    width: 2cm;
+    color: white;
+    background-color: red;
+}
+:hover.delete{
+    background-color: rgb(180, 0, 0);
+    color: white;
+}
+
+#login{
+    background-color: #004186de;
+    border-color: #004186de;
+    color: white;
+}
+.px-0{
+    color: black !important;
+}
+
+#register {
+    background-color: white;
+    border-color: white;
+    color: black;
+}
+
+.text-center {
+    color: white;
+}
+// .img{
+//     width: 30px;
+//     height: 30px;
+//     display:flex;
+//     justify-content: first baseline;
+
+#title{
+    width: 0.3cm;
+    height: 0.3cm;
+    display: table-row;
+    justify-content:center;
+    text-align: center;
+}
+.update{
+    width: 1.5cm;
+    height: 1cm !important;
+}
+.delete{
+    width: 1.5cm;
+    height: 1cm !important ;
+}
+.table td, .table th {
+    padding: 0.2rem; 
+  }
+
+.login-background {
+    background-image: url("/src/assets/images/fondo2.png"); 
+    background-size: cover; 
+    background-position: center;
+    height: 100vh;
+}
+.logo{
+    height: 80px !important;
+}
+
+.modal{
+    background-color: #00000083;
+}
+
+#ConfirmDelete{
+    color: white !important;
+    background-color: red;
+}
+
+/* .login-right{
+    background-color: red !important;
+} */
+// #img1{
+//     margin-right: 10px;
+// }
+// #h2logo{
+
+//     text-decoration: blue;
+//     border-bottom: blue;
+// }
+// <div className='img'><img id='img1' width={50} height={40} src={Logo}></img ></div>
+// import Logo from '/Users/Yoangel/Downloads/logo/logo.png'
