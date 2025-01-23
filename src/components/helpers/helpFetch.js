@@ -10,7 +10,6 @@ export const helpFetch=()=>{
     if(options.body){
         options.body = JSON.stringify(options.body)
     }
-    console.log(options);
 
     return fetch(`${URL}${endpoint}`, options ).then(response =>{
         return response.ok ? response.json() : Promise.reject({

@@ -26,7 +26,6 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  
   useEffect(() => {
     const loggedInUser  = localStorage.getItem('user');
     if (loggedInUser ) {
@@ -34,7 +33,6 @@ const Login = () => {
     }
   }, [navigate]);
 
-  
   const handleLogin = async (e) => {
     e.preventDefault();
     setErrorMessage('');
@@ -46,8 +44,9 @@ const Login = () => {
         const user = usersRes.find(user => user.name === username && user.password === password);
 
         if (user) {
-          console.log('Login successful:', user);
           localStorage.setItem('user', JSON.stringify(user));
+          const options = { body: user };
+          await api.post("loggedInUsers", options);
           navigate('/dashboard');
         } else {
           setErrorMessage('Invalid username or password');
@@ -86,7 +85,7 @@ const Login = () => {
                     />
                     <CRow>
                       <CCol xs={6}>
-                        <CButton type='submit' id="login" color="primary" className="px-4" style={{ backgroundColor: '#003c7c', border: 'none' }} >
+                        <CButton type='submit' id="login" color="primary" className="px-4" style={{ backgroundColor: '#003c7c', border: 'none' }}>
                           Login
                         </CButton>
                       </CCol>
@@ -100,11 +99,13 @@ const Login = () => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white" style={{ backgroundColor: '#003c7c', width: '44%', border: 'none' }}>
+              <CCard className="text-white" style={{ backgroundColor: '#003c7c', width: '44%', border: 'none', paddingTop:"100px" }}>
                 <CCardBody className="text-center">
-                  <div>
-            
-                    
+                  <div className="text-center mb-4" style={{display:"-ms-flexbox", justifyContent:"space-between"}}>
+                    <h3>Regístrate con nosotros</h3>
+                    <Link to="/register">
+                      <CButton style={{backgroundColor:"white", color:"black"}}>Crear una Cuenta</CButton>
+                    </Link>
                   </div>
                 </CCardBody>
               </CCard>
@@ -124,7 +125,7 @@ const InputGroup = ({ icon, placeholder, value, onChange, type = 'text' }) => (
     <CFormInput
       type={type}
       placeholder={placeholder}
-      autoComplete={type === 'password' ? 'current-password ' : 'username'}
+      autoComplete={type === 'password' ? 'current-password' : 'username'}
       value={value}
       onChange={onChange}
     />

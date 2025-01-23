@@ -15,7 +15,8 @@ import {
   CTableRow,
   CTableHeaderCell,
   CTableBody,
-  CTableDataCell
+  CTableDataCell,
+  CFormSelect
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
 import { cilPencil, cilTrash, cilUserPlus, cilSearch} from '@coreui/icons'; 
@@ -86,6 +87,7 @@ const AUsers = () => {
     phone: '',
     email: '',
     password: '',
+    rol_id: '',
   });
 
   useEffect(() => {
@@ -129,6 +131,7 @@ const AUsers = () => {
       phone: '',
       email: '',
       password: '',
+      rol_id: '',
     });
     setUpdateData(null);
   };
@@ -141,17 +144,28 @@ const AUsers = () => {
       user.idCard.includes(searchTerm)
     );
   });
+  // Denifinir roles por id 
+  const roles = (role_id) =>{
+    switch(role_id){
+      case "1":
+        return "Administrador";
+      case "2":
+        return "Empleado";
+      case "3":
+        return "Ciudadano";
+    }
+  };
 
   return (
     <CContainer>
-      <CCard>
-        <CCardHeader>
+      <CCard className="shadow-sm">
+        <CCardHeader className='bg-primary text-white'>
           <h2>Lista de Usuarios</h2>
         </CCardHeader>
       </CCard>
       <CRow>
         <CCol>
-          <CCard className='mb-4'>
+          <CCard className='mb-4 shadow-sm'>
             <CCardHeader style={{display:"flex", alignItems:"center"}}>
                 <CIcon icon={cilSearch}/>
                   <CFormInput
@@ -161,19 +175,20 @@ const AUsers = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     style={{ width: '300px', marginLeft:"10px",marginRight:"600px"}} // Ajusta el ancho según sea necesario
                   />
-                  <CButton color="primary" onClick={() => setModalVisible(true)}>
+                  <CButton color="success" onClick={() => setModalVisible(true)}>
                     <CIcon icon={cilUserPlus} />
                   </CButton>
               </CCardHeader>
             <CCardBody>
-              <CTable hover responsive>
-                <CTableHead>
+              <CTable hover responsive className='custom-table'>
+                <CTableHead className='table-light'>
                   <CTableRow>
                     <CTableHeaderCell>Cédula</CTableHeaderCell>
                     <CTableHeaderCell>Nombre</CTableHeaderCell>
                     <CTableHeaderCell>Apellido</CTableHeaderCell>
                     <CTableHeaderCell>Teléfono</CTableHeaderCell>
                     <CTableHeaderCell>Correo Electrónico</CTableHeaderCell>
+                    <CTableHeaderCell>rol</CTableHeaderCell>
                     <CTableHeaderCell></CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -190,6 +205,7 @@ const AUsers = () => {
                         <CTableDataCell>{user.lastName}</CTableDataCell>
                         <CTableDataCell>{user.phone}</CTableDataCell>
                         <CTableDataCell>{user.email}</CTableDataCell>
+                        <CTableDataCell>{roles(user.rol_id)}</CTableDataCell>
                         <CTableDataCell style={{display:"flex",justifyContent:"flex-end"}}>
                             <CButton className="update" onClick={() => { setUpdateData(user); setModalVisible(true); }}>
                             <CIcon icon={cilPencil} />
@@ -219,7 +235,7 @@ const AUsers = () => {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancelar</button>
-              <button type="button" className="btn btn-danger" onClick={confirmDelete}>Eliminar</button>
+              <button type="button" style={{backgroundColor:"red"}} className="btn btn-danger text-white" onClick={confirmDelete}>Eliminar</button>
             </div>
           </div>
         </div>
@@ -227,13 +243,28 @@ const AUsers = () => {
       <div className={`modal modal-lg ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none', margin: '0 auto' }} tabIndex="-1">
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header bg-primary text-white">
               <h5 className="modal-title">{updateData ? "Actualizar Usuario" : "Registrar Nuevo Usuario"}</h5>
               <button type="button" className="btn-close" onClick={handleCancel} aria-label="Close"></button>
             </div>
             <div className ="modal-body">
               <CForm onSubmit={handleSubmit}>
                 <CRow className='mt-3'>
+                  <CCol>
+                    <CFormSelect
+                      id="rol_id"
+                      name="rol_id"
+                      label="rol"
+                      onChange={handleChange}
+                      value={formData.rol_id}
+                      required
+                    >
+                      <option value="">Seleccione su rol...</option>
+                      <option value="1">Administrador</option>
+                      <option value="2">Empleado</option>
+                      <option value="3">Ciudadano</option>
+                    </CFormSelect>
+                  </CCol>  
                   <CCol md={6}>
                     <CFormInput
                       type="text"
@@ -245,7 +276,9 @@ const AUsers = () => {
                       value={formData.idCard}
                       required
                     />
-                  </CCol>
+                  </CCol>  
+                </CRow>
+                <CRow className='mt-3'>
                   <CCol md={6}>
                     <CFormInput
                       type="text"
@@ -258,8 +291,6 @@ const AUsers = () => {
                       required
                     />
                   </CCol>
-                </CRow>
-                <CRow className="mt-3">
                   <CCol md={6}>
                     <CFormInput
                       type="text"
@@ -272,6 +303,8 @@ const AUsers = () => {
                       required
                     />
                   </CCol>
+                </CRow>
+                <CRow className="mt-3">
                   <CCol md={6}>
                     <CFormInput
                       type="tel"
@@ -284,8 +317,6 @@ const AUsers = () => {
                       required
                     />
                   </CCol>
-                </CRow>
-                <CRow className="mt-3 mb-3">
                   <CCol md={6}>
                     <CFormInput
                       type="email"
@@ -298,6 +329,8 @@ const AUsers = () => {
                       required
                     />
                   </CCol>
+                </CRow>
+                <CRow className="mt-3 mb-3">
                   <CCol md={6}>
                     <CFormInput
                       type="password"

@@ -11,8 +11,6 @@ import {
 import CIcon from '@coreui/icons-react';
 
 import { AppSidebarNav } from './AppSidebarNav';
-
-import logo from 'src/assets/images/logo3.png';
 import '../scss/_custom.scss'
 // sidebar nav config
 import navigation from '../_nav';
@@ -33,21 +31,18 @@ const AppSidebar = () => {
         dispatch({ type: 'set', sidebarShow: visible });
       }}
     >
-      <CSidebarHeader className="border-bottom">
-        <CSidebarBrand to="/">
-          <img className='logo' src={logo} alt="Logo" style={{ width: '100%', height: 'auto' }} />
-        </CSidebarBrand>
-        <CCloseButton
-          className="d-lg-none"
-          dark
-          onClick={() => dispatch({ type: 'set', sidebarShow: false })}
-        />
+      <CSidebarHeader style={{display: "flex", alignItems: "center", justifyContent: "left", textAlign: "center", paddingTop:"10px", paddingBottom:"2px"}} >
+      <div className="border-bottom-logo" style={{paddingBottom:"10px", paddingTop:"12px", display: "flex", alignItems: "center", justifyContent: "left", textAlign: "center"}}>
+      <h5>Prefectura Michelena</h5>  
+      </div>  
       </CSidebarHeader>
       <AppSidebarNav items={navigation} />
-      <CSidebarFooter className="border-top d-none d-lg-flex">
-        <CSidebarToggler
+      <CSidebarFooter className=" d-none d-lg-flex">
+      <div className="border-top-logo" style={{paddingBottom:"1px", paddingTop:"15px", display: "flex", alignItems: "center", justifyContent: "left", textAlign: "center"}}>
+      <CSidebarToggler
           onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
         />
+      </div>
       </CSidebarFooter>
     </CSidebar>
   );

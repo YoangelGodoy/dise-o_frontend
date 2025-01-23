@@ -3,6 +3,7 @@
 .bg-primary {
     background-color: #004186de !important;
 }
+
 .simplebar-content .active{
     background-color:#022a55de !important ;
 }
@@ -49,11 +50,6 @@
 .text-center {
     color: white;
 }
-// .img{
-//     width: 30px;
-//     height: 30px;
-//     display:flex;
-//     justify-content: first baseline;
 
 #title{
     width: 0.3cm;
@@ -75,7 +71,7 @@
   }
 
 .login-background {
-    background-image: url("/src/assets/images/fondo2.png"); 
+    background-image: url("/src/assets/images/fondo_michelena.jpg"); 
     background-size: cover; 
     background-position: center;
     height: 100vh;
@@ -92,6 +88,21 @@
     color: white !important;
     background-color: red;
 }
+//logo del panel principal
+.border-bottom-logo{
+    border-bottom: solid white 0.1px!important;
+    width: 100cm !important;
+}
+.border-top-logo{
+    border-top: solid white 0.1px!important;
+    width: 50cm !important;
+}
+//table clients 
+.custom-table {
+    border-radius: 0.5rem; /* Ajusta el valor según sea necesario */
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
+  }
+
 
 /* .login-right{
     background-color: red !important;
