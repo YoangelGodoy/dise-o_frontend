@@ -39,7 +39,8 @@ const CitationRequestList = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    const response = await api.delete(`citationRequests/${id}`);
+    console.log("id", id)
+    const response = await api.delet("citationRequests", id);
     if (!response.error) {
       setCitationRequests(citationRequests.filter(request => request.id !== id));
       alert("Solicitud de citación eliminada con éxito.");

@@ -371,15 +371,5 @@
       "requestDate": "2025-01-22T22:49:42.701Z"
     }
   ],
-  "citationRequests": [
-    {
-      "id": "4055",
-      "prefecture": "1",
-      "name": "Aaron",
-      "lastName": "godoy",
-      "residentialAddress": "Uvito",
-      "parish": "1",
-      "requestDate": "2025-01-23T11:43:37.129Z"
-    }
-  ]
+  "citationRequests": []
 }
