@@ -91,6 +91,12 @@ const _nav = [
     icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: 'Lista de Citaciones',
+    to: '/listCitation',
+    icon: <CIcon icon={cilList} customClassName="nav-icon" />,
+  },
+  {
     component: CNavTitle,
     name: 'Constancias'
   },

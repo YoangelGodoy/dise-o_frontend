@@ -64,7 +64,19 @@
       "id": "0c62"
     }
   ],
-  "loggedInUsers": [],
+  "loggedInUsers": [
+    {
+      "id": "1737389186077",
+      "idCard": "30651748",
+      "name": "Aaron",
+      "lastName": "godoy",
+      "phone": "123123",
+      "email": "Wyoangt@hotmail.com",
+      "password": "1234",
+      "rol_id": "2",
+      "updated_at": "2025-01-20T17:10:46.301Z"
+    }
+  ],
   "nationalities": [
     {
       "id": "1",
@@ -357,6 +369,17 @@
       "residentialAddress": "hola",
       "prefecture": "michelena",
       "requestDate": "2025-01-22T22:49:42.701Z"
+    }
+  ],
+  "citationRequests": [
+    {
+      "id": "4055",
+      "prefecture": "1",
+      "name": "Aaron",
+      "lastName": "godoy",
+      "residentialAddress": "Uvito",
+      "parish": "1",
+      "requestDate": "2025-01-23T11:43:37.129Z"
     }
   ]
 }

@@ -61,7 +61,7 @@ const CitationRequestForm = () => {
       [name]: value
     });
 
-    // Si se selecciona una prefectura, filtrar las parroquias
+   
     if (name === "prefecture") {
       const selectedPrefectureId = value;
       const selectedPrefecture = prefectures.find(pref => pref.id === selectedPrefectureId);
@@ -70,7 +70,7 @@ const CitationRequestForm = () => {
         const filtered = parishes.filter(parish => parish.municipality_id === selectedPrefecture.municipality_id);
         setFilteredParishes(filtered);
       } else {
-        setFilteredParishes([]); // Resetear si no hay prefectura seleccionada
+        setFilteredParishes([]); 
       }
     }
   };
@@ -85,7 +85,7 @@ const CitationRequestForm = () => {
     const response = await api.post("citationRequests", { body: citationRequest });
     if (!response.error) {
       alert("¡Solicitud de citación enviada con éxito!");
-      // Resetear formulario o redirigir al usuario
+     
     } else {
       alert("Error al enviar la solicitud de citación. Por favor, inténtalo de nuevo.");
     }
@@ -124,7 +124,7 @@ const CitationRequestForm = () => {
                   label="Parroquia"
                   value={formData.parish}
                   onChange={handleChange}
- required
+                  required
                 >
                   <option value="">Selecciona una parroquia</option>
                   {filteredParishes.map((parish) => (

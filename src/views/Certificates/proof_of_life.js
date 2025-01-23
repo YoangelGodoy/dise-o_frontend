@@ -18,31 +18,31 @@ const LifeCertificateRequestForm = () => {
   const [loggedInUser , setLoggedInUser ] = useState(null);
   const [nationalities, setNationalities] = useState([]);
   const [formData, setFormData] = useState({
-    name: "", // Inicialmente vacío
-    lastName: "", // Inicialmente vacío
+    name: "",
+    lastName: "", 
     nationality: "",
     residentialAddress: "",
-    prefecture: "" // Campo para especificar la prefectura
+    prefecture: "" 
   });
 
   useEffect(() => {
     const fetchData = async () => {
-      // Obtener el ID del usuario activo desde el localStorage
+     
       const loggedInUserId = JSON.parse(localStorage.getItem('user')).id;
       if (loggedInUserId) {
-        // Fetch logged-in user data
+      
         const response = await api.get(`loggedInUsers/${loggedInUserId}`);
         if (!response.error) {
           setLoggedInUser (response);
           setFormData((prevState) => ({
             ...prevState,
-            name: response.name || "", // Auto-completar con el nombre del usuario
-            lastName: response.lastName || "" // Auto-completar con el apellido del usuario
+            name: response.name || "", 
+            lastName: response.lastName || "" 
           }));
         }
       }
 
-      // Fetch nationalities
+   
       const nationalitiesResponse = await api.get("nationalities");
       if (!nationalitiesResponse.error) setNationalities(nationalitiesResponse);
     };
@@ -68,7 +68,7 @@ const LifeCertificateRequestForm = () => {
     const response = await api.post("lifeCertificateRequests", { body: lifeCertificateRequest });
     if (!response.error) {
       alert("¡Solicitud de constancia de fe de vida enviada con éxito!");
-      // Resetear formulario o redirigir al usuario
+      
     } else {
       alert("Error al enviar la solicitud de constancia de fe de vida. Por favor, inténtalo de nuevo.");
     }

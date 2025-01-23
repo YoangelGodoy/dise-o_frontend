@@ -13,6 +13,7 @@ const Login = React.lazy(() => import ('./views/pages/login/Login'))
 const register = React.lazy(() => import ('./views/pages/register/Register')) 
 const citation = React.lazy(() => import ('./views/citation/citation')) 
 const life = React.lazy(() => import ('./views/Certificates/proof_of_life')) 
+const listCitation = React.lazy(() => import ('./views/citation/listCitation')) 
 
 const routes = [
   { path: '/', exact: true, name: 'Home', element: Login},
@@ -26,6 +27,7 @@ const routes = [
   // { path: '/services/list', name:'Services', element: listServices},
   // { path: '/services/paymentService', name:'paymentService', element: paymentService},
   { path: '/citation', name:'Citacion', element: citation},
+  { path: '/listCitation', name:'Lista de Citaciones', element: listCitation},
   { path: '/life', name:'Fe de Vida', element: life}
 ]
 
