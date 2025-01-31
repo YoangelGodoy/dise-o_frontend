@@ -57,7 +57,6 @@ const ConstanciaList = () => {
         setConstancias(updatedConstancias)
       } catch (error) {
         console.error("Error al cargar las constancias:", error)
-        alert("Error al cargar las constancias.")
       }
     }
 
