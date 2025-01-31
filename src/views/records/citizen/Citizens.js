@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { helpFetch } from '../../components/helpers/helpFetch';
+import { helpFetch } from '../../../components/helpers/helpFetch';
 import {
   CForm,
   CFormInput,
@@ -19,7 +19,7 @@ import {
 } from '@coreui/react';
 import { CIcon } from '@coreui/icons-react'; 
 import { cilPencil, cilSearch, cilTrash, cilUserPlus } from '@coreui/icons'; 
-import '../../scss/_custom.scss';
+import '../../../scss/_custom.scss';
 
 const ACitizens = () => {
   const api = helpFetch();
@@ -330,7 +330,7 @@ const ACitizens = () => {
                     />
                   </CCol>
                 </CRow>
-                <CButton type="submit" color="primary" className="mt-3">
+                <CButton type="submit" className="mt-3 bottoms">
                   {updateData ? "Actualizar" : "Registrar"}
                 </CButton>
                 <CButton type="button" color="secondary" className="mt-3 ms-2" onClick={handleCancel}>

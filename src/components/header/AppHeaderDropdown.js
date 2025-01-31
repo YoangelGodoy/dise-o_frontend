@@ -50,7 +50,7 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
-        <CAvatar size="md" style={{ backgroundColor: '#004186de', color: '#fff', fontWeight: 'bold' }}>
+        <CAvatar size="md" style={{ backgroundColor: '#556B2F', color: '#fff', fontWeight: 'bold' }}>
           {initials}
         </CAvatar>
       </CDropdownToggle>

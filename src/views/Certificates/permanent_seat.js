@@ -13,43 +13,36 @@ import {
   CContainer
 } from "@coreui/react";
 
-const CitationRequestForm = () => {
+const PermanentSeatCertificateForm = () => {
   const api = helpFetch();
-  const [loggedInUser , setLoggedInUser ] = useState(null);
   const [prefectures, setPrefectures] = useState([]);
   const [parishes, setParishes] = useState([]);
-  const [filteredParishes, setFilteredParishes] = useState([]); 
+  const [filteredParishes, setFilteredParishes] = useState([]);
+  const [citizens, setCitizens] = useState([]);
   const [formData, setFormData] = useState({
     prefecture: "",
-    name: "",
-    lastName: "",
-    residentialAddress: "",
     parish: "",
+    deceasedName: "",
+    deceasedId: "",
+    deathDate: "",
+    deathCertificateNumber: "",
+    residentialAddress: "",
+    witness1Id: "",
+    witness2Id: "",
     status:"Pendiente"
   });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
-
-      const loggedInUserId = JSON.parse(localStorage.getItem('user')).id;
-      if (loggedInUserId) {
- 
-        const response = await api.get(`loggedInUsers/${loggedInUserId}`);
-        if (!response.error) {
-          setLoggedInUser (response);
-          setFormData((prevState) => ({
-            ...prevState,
-            name: response.name, 
-            lastName: response.lastName 
-          }));
-        }
-      }
-
       const prefecturesResponse = await api.get("prefecture");
       if (!prefecturesResponse.error) setPrefectures(prefecturesResponse);
-    
+
       const parishesResponse = await api.get("parishes");
       if (!parishesResponse.error) setParishes(parishesResponse);
+
+      const citizensResponse = await api.get("citizen");
+      if (!citizensResponse.error) setCitizens(citizensResponse);
     };
 
     fetchData();
@@ -62,7 +55,6 @@ const CitationRequestForm = () => {
       [name]: value
     });
 
-   
     if (name === "prefecture") {
       const selectedPrefectureId = value;
       const selectedPrefecture = prefectures.find(pref => pref.id === selectedPrefectureId);
@@ -71,24 +63,32 @@ const CitationRequestForm = () => {
         const filtered = parishes.filter(parish => parish.municipality_id === selectedPrefecture.municipality_id);
         setFilteredParishes(filtered);
       } else {
-        setFilteredParishes([]); 
+        setFilteredParishes([]);
       }
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const citationRequest = {
+    
+    // Validar que los testigos no sean el mismo
+    if (formData.witness1Id === formData.witness2Id) {
+      setError("Los testigos no pueden ser la misma persona.");
+      return;
+    } else {
+      setError(""); // Limpiar el error si la validación es correcta
+    }
+
+    const permanentSeatCertificate = {
       ...formData,
       requestDate: new Date().toISOString()
     };
 
-    const response = await api.post("citationRequests", { body: citationRequest });
+    const response = await api.post("permanentSeatCertificates", { body: permanentSeatCertificate });
     if (!response.error) {
-      alert("¡Solicitud de citación enviada con éxito!");
-     
+      alert("¡Constancia de asiento permanente enviada con éxito!");
     } else {
-      alert("Error al enviar la solicitud de citación. Por favor, inténtalo de nuevo.");
+      alert("Error al enviar la constancia de asiento permanente. Por favor, inténtalo de nuevo.");
     }
   };
 
@@ -96,10 +96,11 @@ const CitationRequestForm = () => {
     <CContainer>
       <CCard className="shadow-sm">
         <CCardHeader className="bg-primary text-white">
-          <h2>Solicitar una citación</h2>
+          <h2>Solicitar Constancia de Asiento Permanente</h2>
         </CCardHeader>
         <CCardBody>
           <CForm onSubmit={handleSubmit}>
+            {error && <div className="alert alert-danger">{error}</div>}
             <CRow className="mb-3">
               <CCol>
                 <CFormSelect
@@ -140,22 +141,45 @@ const CitationRequestForm = () => {
               <CCol>
                 <CFormInput
                   type="text"
-                  name="name"
-                  label="Nombre"
-                  value={formData.name}
+                  name="deceasedName"
+                  label="Nombre del Ciudadano Fallecido"
+                  value={formData.deceasedName}
                   onChange={handleChange}
-                  placeholder="Ingrese su Nombre"
+                  placeholder="Ingrese el nombre del ciudadano fallecido"
                   required
                 />
               </CCol>
               <CCol>
                 <CFormInput
                   type="text"
-                  name="lastName"
-                  label="Apellido"
-                  value={formData.lastName}
+                  name="deceasedId"
+                  label="Cédula del Ciudadano Fallecido"
+                  value={formData.deceasedId}
                   onChange={handleChange}
-                  placeholder="Ingrese su Apellido"
+                  placeholder="Ingrese la cédula del ciudadano fallecido"
+                  required
+                />
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CCol>
+                <CFormInput
+                  type="date"
+                  name="deathDate"
+                  label="Fecha de Fallecimiento"
+                  value={formData.deathDate}
+                  onChange={handleChange}
+                  required
+                />
+              </CCol>
+              <CCol>
+                <CFormInput
+                  type="text"
+                  name="deathCertificateNumber"
+                  label="Número de Acta de Defunción"
+                  value={formData.deathCertificateNumber}
+                  onChange={handleChange}
+                  placeholder="Ingrese el número de acta de defunción"
                   required
                 />
               </CCol>
@@ -168,9 +192,43 @@ const CitationRequestForm = () => {
                   label="Dirección de Residencia"
                   value={formData.residentialAddress}
                   onChange={handleChange}
-                  placeholder="Ingrese su dirección de residencia"
+                  placeholder="Ingrese la dirección de residencia"
                   required
                 />
+              </CCol>
+            </CRow>
+            <CRow className="mb-3">
+              <CCol>
+                <CFormSelect
+                  name="witness1Id"
+                  label="Testigo 1 (Cédula)"
+                  value={formData.witness1Id}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Selecciona un testigo</option>
+                  {citizens.map((citizen) => (
+                    <option key={citizen.id} value={citizen.id}>
+                      {citizen.nombre} - {citizen.cedula}
+                    </option>
+                  ))}
+                </CFormSelect>
+              </CCol>
+              <CCol>
+                <CFormSelect
+                  name="witness2Id"
+                  label="Testigo 2 (Cédula)"
+                  value={formData.witness2Id}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Selecciona un testigo</option>
+                  {citizens.map((citizen) => (
+                    <option key={citizen.id} value={citizen.id}>
+                      {citizen.nombre} - {citizen.cedula}
+                    </option>
+                  ))}
+                </CFormSelect>
               </CCol>
             </CRow>
             <CButton type="submit" className="bottoms">
@@ -183,4 +241,4 @@ const CitationRequestForm = () => {
   );
 };
 
-export default CitationRequestForm;
+export default PermanentSeatCertificateForm;

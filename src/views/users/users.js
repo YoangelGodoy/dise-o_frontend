@@ -344,7 +344,7 @@ const AUsers = () => {
                     />
                   </CCol>
                 </CRow>
-                <CButton type="submit" color="primary" className="mt-3">
+                <CButton type="submit" className="mt-3 bottoms">
                   {updateData ? "Actualizar" : "Registrar"}
                 </CButton>
                 <CButton type="button" color="secondary" className="mt-3 ms-2" onClick={handleCancel}>

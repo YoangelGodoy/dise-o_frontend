@@ -22,7 +22,8 @@ import {
   cibCcVisa,
   cilFindInPage,
   cilFork,
-  cilNoteAdd
+  cilNoteAdd,
+  cilCarAlt
 } from '@coreui/icons'
 import { CNav, CNavbar, CNavGroup, CNavItem, CNavTitle} from '@coreui/react'
 import { compose } from 'redux'
@@ -81,6 +82,12 @@ const _nav = [
     icon: <CIcon icon={cilGroup} customClassName="nav-icon" />,
   },
   {
+    component: CNavItem,
+    name: 'Vehiculos',
+    to: '/vehicle',
+    icon: <CIcon icon={cilCarAlt} customClassName="nav-icon" />,
+  },
+  {
     component: CNavTitle,
     name: 'Citación'
   },
@@ -105,7 +112,41 @@ const _nav = [
     name: 'Fe de Vida',
     to: '/life',
     icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
-  }
+  },
+  {
+    component: CNavItem,
+    name: 'Asiento Permanente',
+    to: '/seat',
+    icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />
+  },
+  {
+    component: CNavItem,
+    name: 'Buena Conducta',
+    to: '/behavior',
+    icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />
+  },
+  {
+    component: CNavItem,
+    name: 'Lista de Constancias',
+    to: '/listCertificates',
+    icon: <CIcon icon={cilList} customClassName="nav-icon" />
+  },
+  {
+    component: CNavTitle,
+    name: 'Permisos'
+  },
+  {
+    component: CNavItem,
+    name: 'Permiso de Mudanza',
+    to: '/movingPermit',
+    icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />
+  },
+  {
+    component: CNavItem,
+    name: 'Lista de Permisos',
+    to: '/listMovingPermit',
+    icon: <CIcon icon={cilList} customClassName="nav-icon" />
+  },
   //USAR LUEGO
   // {
   //   component: CNavTitle,

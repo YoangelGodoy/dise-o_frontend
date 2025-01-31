@@ -14,59 +14,59 @@ import {
   CButton,
   CFormInput,
 } from "@coreui/react"
-import { cilCheck, cilTrash, cilSearch, cilCloudDownload, cilDataTransferDown } from "@coreui/icons"
+import { cilCheck, cilTrash, cilSearch, cilDataTransferDown } from "@coreui/icons"
 import { CIcon } from "@coreui/icons-react"
 
-const CitationRequestList = () => {
+const MovingPermitList = () => {
   const api = helpFetch()
-  const [citationRequests, setCitationRequests] = useState([])
+  const [movingPermits, setMovingPermits] = useState([])
   const [filterDate, setFilterDate] = useState("")
   const [filterName, setFilterName] = useState("")
 
   useEffect(() => {
-    const fetchCitationRequests = async () => {
-      const response = await api.get("citationRequests")
+    const fetchMovingPermits = async () => {
+      const response = await api.get("movingPermits")
       if (!response.error) {
-        const updatedRequests = response.map((request) => {
-          const requestDate = new Date(request.requestDate)
+        const updatedPermits = response.map((permit) => {
+          const requestDate = new Date(permit.requestDate)
           const dueDate = new Date(requestDate)
           dueDate.setDate(requestDate.getDate() + 2)
-          return { ...request, dueDate: dueDate.toISOString(), status: request.status || "pendiente" }
+          return { ...permit, dueDate: dueDate.toISOString(), status: permit.status || "Pendiente" }
         })
-        setCitationRequests(updatedRequests)
+        setMovingPermits(updatedPermits)
       } else {
-        alert("Error al cargar las solicitudes de citación.")
+        alert("Error al cargar los permisos de mudanza.")
       }
     }
 
-    fetchCitationRequests()
-  }, [api.get]) // Added api.get to dependencies
+    fetchMovingPermits()
+  }, [api.get])
 
   const handleDelete = async (id) => {
-    const response = await api.delet("citationRequests", id)
+    const response = await api.delet("movingPermits", id)
     if (!response.error) {
-      setCitationRequests(citationRequests.filter((request) => request.id !== id))
-      alert("Solicitud de citación eliminada con éxito.")
+      setMovingPermits(movingPermits.filter((permit) => permit.id !== id))
+      alert("Permiso de mudanza eliminado con éxito.")
     } else {
-      alert("Error al eliminar la solicitud de citación.")
+      alert("Error al eliminar el permiso de mudanza.")
     }
   }
 
   const handleChangeStatus = async (id) => {
-    const request = citationRequests.find((req) => req.id === id)
-    if (!request) return
+    const permit = movingPermits.find((p) => p.id === id)
+    if (!permit) return
 
-    const nextStatus = getNextStatus(request.status)
-    const updatedRequest = { ...request, status: nextStatus }
+    const nextStatus = getNextStatus(permit.status)
+    const updatedPermit = { ...permit, status: nextStatus }
 
-    const options = { body: updatedRequest }
-    const response = await api.put("citationRequests", options, id)
+    const options = { body: updatedPermit }
+    const response = await api.put("movingPermits", options, id)
 
     if (!response.error) {
-      setCitationRequests(citationRequests.map((req) => (req.id === id ? { ...req, status: nextStatus } : req)))
-      alert("Estado de la solicitud actualizado con éxito.")
+      setMovingPermits(movingPermits.map((p) => (p.id === id ? { ...p, status: nextStatus } : p)))
+      alert("Estado del permiso actualizado con éxito.")
     } else {
-      alert("Error al actualizar el estado de la solicitud.")
+      alert("Error al actualizar el estado del permiso.")
     }
   }
 
@@ -76,7 +76,7 @@ const CitationRequestList = () => {
     } else if (currentStatus === "Listo") {
       return "Entregado"
     }
-    return currentStatus // No cambiar si ya es "entregado"
+    return currentStatus
   }
 
   const getButtonColor = (status) => {
@@ -84,19 +84,17 @@ const CitationRequestList = () => {
       case "Pendiente":
         return "warning"
       case "Listo":
-        return "info" 
+        return "info"
       case "Entregado":
-        return "success" 
+        return "success"
       default:
-        return "secondary" 
+        return "secondary"
     }
   }
 
-  const filteredRequests = citationRequests.filter((request) => {
-    const matchesDate = filterDate ? new Date(request.dueDate).toISOString().split("T")[0] === filterDate : true
-    const matchesName =
-      request.name.toLowerCase().includes(filterName.toLowerCase()) ||
-      request.lastName.toLowerCase().includes(filterName.toLowerCase())
+  const filteredPermits = movingPermits.filter((permit) => {
+    const matchesDate = filterDate ? new Date(permit.dueDate).toISOString().split("T")[0] === filterDate : true
+    const matchesName = permit.userName.toLowerCase().includes(filterName.toLowerCase())
     return matchesDate && matchesName
   })
 
@@ -104,7 +102,7 @@ const CitationRequestList = () => {
     <CContainer>
       <CCard className="shadow-sm">
         <CCardHeader className="bg-primary text-white">
-          <h2>Lista de Solicitudes de Citación</h2>
+          <h2>Lista de Permisos de Mudanza</h2>
         </CCardHeader>
         <CCardHeader style={{ display: "flex", alignItems: "center" }}>
           <CIcon style={{ marginRight: "8px" }} icon={cilSearch} />
@@ -128,41 +126,40 @@ const CitationRequestList = () => {
             <CTableHead>
               <CTableRow>
                 <CTableHeaderCell>Nombre</CTableHeaderCell>
-                <CTableHeaderCell>Apellido</CTableHeaderCell>
+                <CTableHeaderCell>Municipio de Salida</CTableHeaderCell>
+                <CTableHeaderCell>Lugar de Llegada</CTableHeaderCell>
                 <CTableHeaderCell>Fecha Límite</CTableHeaderCell>
                 <CTableHeaderCell>Estado</CTableHeaderCell>
                 <CTableHeaderCell>Acciones</CTableHeaderCell>
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {filteredRequests.map((request) => (
-                <CTableRow key={request.id}>
-                  <CTableDataCell>{request.name}</CTableDataCell>
-                  <CTableDataCell>{request.lastName}</CTableDataCell>
-                  <CTableDataCell>{new Date(request.dueDate).toLocaleDateString()}</CTableDataCell>
-                  <CTableDataCell>{request.status}</CTableDataCell>
+              {filteredPermits.map((permit) => (
+                <CTableRow key={permit.id}>
+                  <CTableDataCell>{permit.userName}</CTableDataCell>
+                  <CTableDataCell>{permit.municipalityDeparture}</CTableDataCell>
+                  <CTableDataCell>{permit.arrivalPlace}</CTableDataCell>
+                  <CTableDataCell>{new Date(permit.dueDate).toLocaleDateString()}</CTableDataCell>
+                  <CTableDataCell>{permit.status}</CTableDataCell>
                   <CTableDataCell>
                     <CButton
-                      color={getButtonColor(request.status)}
+                      color={getButtonColor(permit.status)}
                       className="text-white"
-                      onClick={() => handleChangeStatus(request.id)}
-                      disabled={request.status === "entregado"} // Deshabilitar si ya está entregado
+                      onClick={() => handleChangeStatus(permit.id)}
+                      disabled={permit.status === "Entregado"}
                       style={{ marginRight: "7px" }}
                     >
                       <CIcon icon={cilCheck} />
                     </CButton>
-                    <CButton 
-                      color="danger" 
-                      className="text-white" 
-                      onClick={() => handleDelete(request.id)}
+                    <CButton
+                      color="danger"
+                      className="text-white"
+                      onClick={() => handleDelete(permit.id)}
                       style={{ marginRight: "7px" }}
                     >
                       <CIcon icon={cilTrash} />
                     </CButton>
-                    <CButton 
-                      color="primary" 
-                      className="text-white" 
-                    >
+                    <CButton color="primary" className="text-white">
                       <CIcon icon={cilDataTransferDown} />
                     </CButton>
                   </CTableDataCell>
@@ -176,5 +173,5 @@ const CitationRequestList = () => {
   )
 }
 
-export default CitationRequestList
+export default MovingPermitList
 

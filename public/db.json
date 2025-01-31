@@ -328,6 +328,17 @@
       "telefono": "04147287332",
       "created_at": "2025-01-19T16:21:00.391Z",
       "updated_at": "2025-01-19T16:21:22.175Z"
+    },
+    {
+      "id": "1738343458486",
+      "cedula": "30782050",
+      "nombre": "Noelia",
+      "apellido": "Chacon",
+      "fecha_nacimiento": "2025-01-09",
+      "direccion": "michelena",
+      "telefono": "04147187332",
+      "created_at": "2025-01-31T17:10:58.486Z",
+      "updated_at": "2025-01-31T17:10:58.486Z"
     }
   ],
   "prefecture": [
@@ -359,7 +370,8 @@
       "nationality": "1",
       "residentialAddress": "hola",
       "prefecture": "michelena",
-      "requestDate": "2025-01-22T04:21:42.514Z"
+      "requestDate": "2025-01-22T04:21:42.514Z",
+      "status": "Pediente"
     },
     {
       "id": "9ea9",
@@ -368,8 +380,115 @@
       "nationality": "1",
       "residentialAddress": "hola",
       "prefecture": "michelena",
-      "requestDate": "2025-01-22T22:49:42.701Z"
+      "requestDate": "2025-01-22T22:49:42.701Z",
+      "status": "Pediente",
+      "type": "Fe de Vida",
+      "dueDate": "2025-01-24T22:49:42.701Z"
     }
   ],
-  "citationRequests": []
+  "citationRequests": [
+    {
+      "id": "cce9",
+      "prefecture": "1",
+      "name": "Yoangel",
+      "lastName": "Godoy",
+      "residentialAddress": "Uvito",
+      "parish": "1",
+      "status": "Entregado",
+      "requestDate": "2025-01-31T01:04:26.884Z",
+      "dueDate": "2025-02-02T01:04:26.884Z"
+    }
+  ],
+  "permanentSeatCertificates": [
+    {
+      "id": "2654",
+      "prefecture": "1",
+      "parish": "1",
+      "deceasedName": "Yoangel Alejeandro Godoy Chacon",
+      "deceasedId": "30782050",
+      "deathDate": "2025-01-22",
+      "deathCertificateNumber": "20",
+      "residentialAddress": "Uvito",
+      "witness1Id": "1737303660391",
+      "witness2Id": "1738343458486",
+      "status": "Pendiente",
+      "requestDate": "2025-01-31T19:45:45.230Z"
+    }
+  ],
+  "goodbehaviorCertificates": [
+    {
+      "id": "93c5",
+      "prefecture": "1",
+      "parish": "1",
+      "citizenId": "30782050",
+      "citizenName": "Yoangel Alejandro Godoy Chacon",
+      "citizenNationality": "Venezuela",
+      "reason": "estudios",
+      "residentialAddress": "Uvito",
+      "witness1Id": "1737303660391",
+      "witness2Id": "1738343458486",
+      "status": "Pendiente",
+      "requestDate": "2025-01-31T19:45:03.470Z"
+    }
+  ],
+  "brands": [
+    {
+      "id": "1",
+      "name": "Ford"
+    },
+    {
+      "id": "2",
+      "name": "Dodge"
+    },
+    {
+      "id": "3",
+      "name": "Chevrolet"
+    }
+  ],
+  "models": [
+    {
+      "id": "1",
+      "name": "Triton 350",
+      "brands:id": "1"
+    },
+    {
+      "id": "2",
+      "name": "cheyyene 350",
+      "brands:id": "3"
+    },
+    {
+      "id": "1",
+      "name": "Dodge 350",
+      "brands:id": "2"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "1738348797669",
+      "vehicleBrand": "Ford",
+      "vehicleModel": "Triton 350",
+      "vehicleYear": "1982",
+      "vehicleColor": "rojo",
+      "vehicleClass": "camion",
+      "vehiclePlate": "22RTAG",
+      "engineSerial": "asdsa5d1sa651d",
+      "chassisSerial": "asd15sa61dsa2",
+      "created_at": "2025-01-31T18:39:57.669Z",
+      "updated_at": "2025-01-31T18:39:57.669Z"
+    }
+  ],
+  "movingPermits": [
+    {
+      "id": "876f",
+      "userId": "30782050",
+      "userName": "Yoangel",
+      "municipalityDeparture": "Michelena",
+      "arrivalPlace": "michelena ",
+      "vehicleId": "1738348797669",
+      "document": {},
+      "requestDate": "2025-01-31T18:46:31.718Z",
+      "dueDate": "2025-02-02T18:46:31.718Z",
+      "status": "Entregado"
+    }
+  ]
 }

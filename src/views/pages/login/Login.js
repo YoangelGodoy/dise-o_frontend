@@ -85,7 +85,7 @@ const Login = () => {
                     />
                     <CRow>
                       <CCol xs={6}>
-                        <CButton type='submit' id="login" color="primary" className="px-4" style={{ backgroundColor: '#003c7c', border: 'none' }}>
+                        <CButton type='submit' id="login" color="primary" className="px-4" style={{ backgroundColor: '#556B2F', border: 'none' }}>
                           Login
                         </CButton>
                       </CCol>
@@ -99,7 +99,7 @@ const Login = () => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white" style={{ backgroundColor: '#003c7c', width: '44%', border: 'none', paddingTop:"100px" }}>
+              <CCard className="text-white" style={{ backgroundColor: '#556B2F', width: '44%', border: 'none', paddingTop:"100px" }}>
                 <CCardBody className="text-center">
                   <div className="text-center mb-4" style={{display:"-ms-flexbox", justifyContent:"space-between"}}>
                     <h3>Regístrate con nosotros</h3>

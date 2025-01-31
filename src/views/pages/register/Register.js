@@ -210,7 +210,7 @@ const Register = () => {
                   {successMessage && <p className="text-success">{successMessage}</p>}
 
                   <div className="d-grid">
-                    <CButton color="primary" type="submit">Crear Cuenta</CButton>
+                    <CButton className="bg-primary text-white" type="submit">Crear Cuenta</CButton>
                   </div>
                 </CForm>
               </CCardBody>

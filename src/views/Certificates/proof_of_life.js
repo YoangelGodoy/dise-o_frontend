@@ -22,7 +22,8 @@ const LifeCertificateRequestForm = () => {
     lastName: "", 
     nationality: "",
     residentialAddress: "",
-    prefecture: "" 
+    prefecture: "" ,
+    status:"Pendiente"
   });
 
   useEffect(() => {
@@ -150,7 +151,7 @@ const LifeCertificateRequestForm = () => {
                 />
               </CCol>
             </CRow>
-            <CButton type="submit" color="primary">
+            <CButton type="submit" className="bottoms">
               Enviar Solicitud
             </CButton>
           </CForm>

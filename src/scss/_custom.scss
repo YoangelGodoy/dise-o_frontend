@@ -1,24 +1,31 @@
 // Here you can add other styles
-
 .bg-primary {
-    background-color: #004186de !important;
+    background-color: #556B2F !important;
 }
-
+//botones
+.bottoms{
+    background-color: #556B2F !important;
+    color: white;
+}
+:hover.bottoms{
+    background-color: #425324 !important;
+    color: white;
+}
 .simplebar-content .active{
-    background-color:#022a55de !important ;
+    background-color:#425324 !important ;
 }
 .simplebar-content .nav-link:hover{
-    background-color: #022a55de !important;
+    background-color: #425324 !important;
 }
 .update{
     width: 2.6cm;
     color: white;
-    background-color: #004186de;
+    background-color: #556B2F;
     display: table-row;
     margin-right: 0.3cm;
 }
 :hover.update{
-    background-color: #013063de;
+    background-color: #425324;
     color: white;
 }
 
@@ -33,8 +40,8 @@
 }
 
 #login{
-    background-color: #004186de;
-    border-color: #004186de;
+    background-color: #556B2F;
+    border-color: #556B2F;
     color: white;
 }
 .px-0{
