@@ -38,22 +38,22 @@ const Login = () => {
     setErrorMessage('');
 
     try {
-      // const usersRes = await api.get("users");
-      navigate('/dashboard');
-      // if (!usersRes.err) {
-      //   const user = usersRes.find(user => user.name === username && user.password === password);
+      const usersRes = await api.get("users");
 
-      //   if (user) {
-      //     localStorage.setItem('user', JSON.stringify(user));
-      //     const options = { body: user };
-      //     await api.post("loggedInUsers", options);
-          
-      //   } else {
-      //     setErrorMessage('Invalid username or password');
-      //   }
-      // } else {
-      //   setErrorMessage('Error fetching user data');
-      // }
+      if (!usersRes.err) {
+        const user = usersRes.find(user => user.name === username && user.password === password);
+
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          const options = { body: user };
+          await api.post("loggedInUsers", options);
+          navigate('/dashboard');
+        } else {
+          setErrorMessage('Invalid username or password');
+        }
+      } else {
+        setErrorMessage('Error fetching user data');
+      }
     } catch (error) {
       setErrorMessage('An unexpected error occurred.');
     }
