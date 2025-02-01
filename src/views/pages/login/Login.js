@@ -42,12 +42,12 @@ const Login = () => {
 
       if (!usersRes.err) {
         const user = usersRes.find(user => user.name === username && user.password === password);
-
+        navigate('/dashboard');
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           const options = { body: user };
           await api.post("loggedInUsers", options);
-          navigate('/dashboard');
+          
         } else {
           setErrorMessage('Invalid username or password');
         }
