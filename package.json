@@ -18,7 +18,8 @@
     "lint": "eslint \"src/**/*.js\"",
     "serve": "vite preview",
     "start": "vite",
-    "server": "json-server --watch ./public/db.json --port 3004"
+    "server": "json-server --watch ./public/db.json --port 3004",
+    "dev": "concurrently \"npm run server\" \"npm start\""
   },
   "dependencies": {
     "@coreui/chartjs": "^4.0.0",
@@ -32,6 +33,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.4",
     "classnames": "^2.5.1",
+    "concurrently": "^9.1.2",
     "core-js": "^3.38.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

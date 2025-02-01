@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Ruta para JSON Server
-app.use('/api', jsonServer.router('db.json'));
+app.use('/public', jsonServer.router('db.json'));
 
 // Manejar todas las demás rutas con el archivo HTML de React
 app.get('*', (req, res) => {
