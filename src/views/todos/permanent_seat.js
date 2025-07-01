@@ -10,12 +10,7 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CContainer,
-  CModal,         // Importar CModal
-  CModalHeader,   // Importar CModalHeader
-  CModalTitle,    // Importar CModalTitle
-  CModalBody,     // Importar CModalBody
-  CModalFooter,   // Importar CModalFooter
+  CContainer
 } from "@coreui/react";
 
 const PermanentSeatCertificateForm = () => {
@@ -36,13 +31,7 @@ const PermanentSeatCertificateForm = () => {
     witness2Id: "",
     status:"Pendiente"
   });
-  const [error, setError] = useState(""); // Este error es para la validación de testigos
-
-  // Estados para el modal de mensajes (éxito/error de API)
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [modalTitle, setModalTitle] = useState("");
-  const [modalType, setModalType] = useState(""); // 'success' o 'error' para el color del botón
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,7 +58,7 @@ const PermanentSeatCertificateForm = () => {
     if (name === "prefecture") {
       const selectedPrefectureId = value;
       const selectedPrefecture = prefectures.find(pref => pref.id === selectedPrefectureId);
-
+      
       if (selectedPrefecture) {
         const filtered = parishes.filter(parish => parish.municipality_id === selectedPrefecture.municipality_id);
         setFilteredParishes(filtered);
@@ -81,9 +70,9 @@ const PermanentSeatCertificateForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     // Validar que los testigos no sean el mismo
-    if (formData.witness1Id && formData.witness2Id && formData.witness1Id === formData.witness2Id) {
+    if (formData.witness1Id === formData.witness2Id) {
       setError("Los testigos no pueden ser la misma persona.");
       return;
     } else {
@@ -97,28 +86,9 @@ const PermanentSeatCertificateForm = () => {
 
     const response = await api.post("permanentSeatCertificates", { body: permanentSeatCertificate });
     if (!response.error) {
-      setModalTitle("¡Éxito!");
-      setModalMessage("¡Constancia de asiento permanente enviada con éxito!");
-      setModalType("success");
-      setShowModal(true);
-      // Opcional: resetear el formulario después de un envío exitoso
-      setFormData({
-        prefecture: "",
-        parish: "",
-        deceasedName: "",
-        deceasedId: "",
-        deathDate: "",
-        deathCertificateNumber: "",
-        residentialAddress: "",
-        witness1Id: "",
-        witness2Id: "",
-        status:"Pendiente"
-      });
+      alert("¡Constancia de asiento permanente enviada con éxito!");
     } else {
-      setModalTitle("Error");
-      setModalMessage("Error al enviar la constancia de asiento permanente. Por favor, inténtalo de nuevo.");
-      setModalType("error");
-      setShowModal(true);
+      alert("Error al enviar la constancia de asiento permanente. Por favor, inténtalo de nuevo.");
     }
   };
 
@@ -267,21 +237,6 @@ const PermanentSeatCertificateForm = () => {
           </CForm>
         </CCardBody>
       </CCard>
-
-      {/* Modal de Mensajes (Éxito/Error) */}
-      <CModal visible={showModal} onClose={() => setShowModal(false)}>
-        <CModalHeader onClose={() => setShowModal(false)}>
-          <CModalTitle>{modalTitle}</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>{modalMessage}</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color={modalType === "success" ? "success" : "danger"} onClick={() => setShowModal(false)}>
-            Cerrar
-          </CButton>
-        </CModalFooter>
-      </CModal>
     </CContainer>
   );
 };

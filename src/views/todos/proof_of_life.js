@@ -10,12 +10,7 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CContainer,
-  CModal,         // Importar CModal
-  CModalHeader,   // Importar CModalHeader
-  CModalTitle,    // Importar CModalTitle
-  CModalBody,     // Importar CModalBody
-  CModalFooter,   // Importar CModalFooter
+  CContainer
 } from "@coreui/react";
 
 const LifeCertificateRequestForm = () => {
@@ -24,34 +19,31 @@ const LifeCertificateRequestForm = () => {
   const [nationalities, setNationalities] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
-    lastName: "",
+    lastName: "", 
     nationality: "",
     residentialAddress: "",
     prefecture: "" ,
     status:"Pendiente"
   });
 
-  // Estados para el modal de mensajes (éxito/error de API)
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [modalTitle, setModalTitle] = useState("");
-  const [modalType, setModalType] = useState(""); // 'success' o 'error' para el color del botón
-
   useEffect(() => {
     const fetchData = async () => {
+     
       const loggedInUserId = JSON.parse(localStorage.getItem('user')).id;
       if (loggedInUserId) {
+      
         const response = await api.get(`loggedInUsers/${loggedInUserId}`);
         if (!response.error) {
           setLoggedInUser (response);
           setFormData((prevState) => ({
             ...prevState,
-            name: response.name || "",
-            lastName: response.lastName || ""
+            name: response.name || "", 
+            lastName: response.lastName || "" 
           }));
         }
       }
 
+   
       const nationalitiesResponse = await api.get("nationalities");
       if (!nationalitiesResponse.error) setNationalities(nationalitiesResponse);
     };
@@ -76,23 +68,10 @@ const LifeCertificateRequestForm = () => {
 
     const response = await api.post("lifeCertificateRequests", { body: lifeCertificateRequest });
     if (!response.error) {
-      setModalTitle("¡Éxito!");
-      setModalMessage("¡Solicitud de constancia de fe de vida enviada con éxito!");
-      setModalType("success");
-      setShowModal(true);
-      // Opcional: resetear el formulario después de un envío exitoso
-      setFormData((prevState) => ({
-        ...prevState, // Mantener name y lastName autocompletados si el usuario está logueado
-        nationality: "",
-        residentialAddress: "",
-        prefecture: "" ,
-        status:"Pendiente"
-      }));
+      alert("¡Solicitud de constancia de fe de vida enviada con éxito!");
+      
     } else {
-      setModalTitle("Error");
-      setModalMessage("Error al enviar la solicitud de constancia de fe de vida. Por favor, inténtalo de nuevo.");
-      setModalType("error");
-      setShowModal(true);
+      alert("Error al enviar la solicitud de constancia de fe de vida. Por favor, inténtalo de nuevo.");
     }
   };
 
@@ -178,21 +157,6 @@ const LifeCertificateRequestForm = () => {
           </CForm>
         </CCardBody>
       </CCard>
-
-      {/* Modal de Mensajes (Éxito/Error) */}
-      <CModal visible={showModal} onClose={() => setShowModal(false)}>
-        <CModalHeader onClose={() => setShowModal(false)}>
-          <CModalTitle>{modalTitle}</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>{modalMessage}</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color={modalType === "success" ? "success" : "danger"} onClick={() => setShowModal(false)}>
-            Cerrar
-          </CButton>
-        </CModalFooter>
-      </CModal>
     </CContainer>
   );
 };

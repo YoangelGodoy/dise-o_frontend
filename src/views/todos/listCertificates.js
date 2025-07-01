@@ -13,12 +13,6 @@ import {
   CTableDataCell,
   CFormInput,
   CFormSelect,
-  CModal,         // Importar CModal
-  CModalHeader,   // Importar CModalHeader
-  CModalTitle,    // Importar CModalTitle
-  CModalBody,     // Importar CModalBody
-  CModalFooter,   // Importar CModalFooter
-  CButton,        // Importar CButton para el modal
 } from "@coreui/react"
 import { cilSearch } from "@coreui/icons"
 import { CIcon } from "@coreui/icons-react"
@@ -29,10 +23,6 @@ const ConstanciaList = () => {
   const [filterDate, setFilterDate] = useState("")
   const [filterName, setFilterName] = useState("")
   const [filterType, setFilterType] = useState("")
-
-  // Estados para el modal de error
-  const [showErrorModal, setShowErrorModal] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
 
   useEffect(() => {
     const fetchConstancias = async () => {
@@ -48,14 +38,14 @@ const ConstanciaList = () => {
           ...permanentSeats.map((cert) => ({
             ...cert,
             type: "Asiento Permanente",
-            name: cert.deceasedName ? cert.deceasedName.split(" ")[0] : '', // Manejar posible undefined
-            lastName: cert.deceasedName ? cert.deceasedName.split(" ").slice(1).join(" ") : '', // Manejar posible undefined
+            name: cert.deceasedName.split(" ")[0],
+            lastName: cert.deceasedName.split(" ").slice(1).join(" "),
           })),
           ...goodBehaviors.map((cert) => ({
             ...cert,
             type: "Buena Conducta",
-            name: cert.citizenName ? cert.citizenName.split(" ")[0] : '', // Manejar posible undefined
-            lastName: cert.citizenName ? cert.citizenName.split(" ").slice(1).join(" ") : '', // Manejar posible undefined
+            name: cert.citizenName.split(" ")[0],
+            lastName: cert.citizenName.split(" ").slice(1).join(" "),
           })),
         ]
         const updatedConstancias = allRequests.map((constancia) => {
@@ -66,8 +56,7 @@ const ConstanciaList = () => {
         })
         setConstancias(updatedConstancias)
       } catch (error) {
-        setErrorMessage("Error al cargar las constancias: " + error.message)
-        setShowErrorModal(true)
+        console.error("Error al cargar las constancias:", error)
       }
     }
 
@@ -143,21 +132,9 @@ const ConstanciaList = () => {
           </CTable>
         </CCardBody>
       </CCard>
-
-      {/* Modal de Error General */}
-      <CModal visible={showErrorModal} onClose={() => setShowErrorModal(false)}>
-        <CModalHeader onClose={() => setShowErrorModal(false)}>
-          <CModalTitle>Error</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>{errorMessage}</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="danger" onClick={() => setShowErrorModal(false)}>Cerrar</CButton>
-        </CModalFooter>
-      </CModal>
     </CContainer>
   )
 }
 
 export default ConstanciaList
+

@@ -10,39 +10,29 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CContainer,
-  CModal,         // Importar CModal
-  CModalHeader,   // Importar CModalHeader
-  CModalTitle,    // Importar CModalTitle
-  CModalBody,     // Importar CModalBody
-  CModalFooter,   // Importar CModalFooter
+  CContainer
 } from "@coreui/react";
 
-const PermanentSeatCertificateForm = () => {
+const goodbehaviorCertificateForm = () => {
   const api = helpFetch();
   const [prefectures, setPrefectures] = useState([]);
   const [parishes, setParishes] = useState([]);
   const [filteredParishes, setFilteredParishes] = useState([]);
   const [citizens, setCitizens] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [formData, setFormData] = useState({
     prefecture: "",
     parish: "",
-    deceasedName: "",
-    deceasedId: "",
-    deathDate: "",
-    deathCertificateNumber: "",
+    citizenId: "",
+    citizenName: "",
+    citizenNationality: "",
+    reason: "",
     residentialAddress: "",
     witness1Id: "",
     witness2Id: "",
     status:"Pendiente"
   });
-  const [error, setError] = useState(""); // Este error es para la validación de testigos
-
-  // Estados para el modal de mensajes (éxito/error de API)
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [modalTitle, setModalTitle] = useState("");
-  const [modalType, setModalType] = useState(""); // 'success' o 'error' para el color del botón
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,6 +44,9 @@ const PermanentSeatCertificateForm = () => {
 
       const citizensResponse = await api.get("citizen");
       if (!citizensResponse.error) setCitizens(citizensResponse);
+
+      const countriesResponse = await api.get("nationalities");
+      if (!countriesResponse.error) setCountries(countriesResponse);
     };
 
     fetchData();
@@ -69,7 +62,7 @@ const PermanentSeatCertificateForm = () => {
     if (name === "prefecture") {
       const selectedPrefectureId = value;
       const selectedPrefecture = prefectures.find(pref => pref.id === selectedPrefectureId);
-
+      
       if (selectedPrefecture) {
         const filtered = parishes.filter(parish => parish.municipality_id === selectedPrefecture.municipality_id);
         setFilteredParishes(filtered);
@@ -81,44 +74,25 @@ const PermanentSeatCertificateForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     // Validar que los testigos no sean el mismo
-    if (formData.witness1Id && formData.witness2Id && formData.witness1Id === formData.witness2Id) {
+    if (formData.witness1Id === formData.witness2Id) {
       setError("Los testigos no pueden ser la misma persona.");
       return;
     } else {
       setError(""); // Limpiar el error si la validación es correcta
     }
 
-    const permanentSeatCertificate = {
+    const goodbehaviorCertificate = {
       ...formData,
       requestDate: new Date().toISOString()
     };
 
-    const response = await api.post("permanentSeatCertificates", { body: permanentSeatCertificate });
+    const response = await api.post("goodbehaviorCertificates", { body: goodbehaviorCertificate });
     if (!response.error) {
-      setModalTitle("¡Éxito!");
-      setModalMessage("¡Constancia de asiento permanente enviada con éxito!");
-      setModalType("success");
-      setShowModal(true);
-      // Opcional: resetear el formulario después de un envío exitoso
-      setFormData({
-        prefecture: "",
-        parish: "",
-        deceasedName: "",
-        deceasedId: "",
-        deathDate: "",
-        deathCertificateNumber: "",
-        residentialAddress: "",
-        witness1Id: "",
-        witness2Id: "",
-        status:"Pendiente"
-      });
+      alert("¡Constancia de buena conducta enviada con éxito!");
     } else {
-      setModalTitle("Error");
-      setModalMessage("Error al enviar la constancia de asiento permanente. Por favor, inténtalo de nuevo.");
-      setModalType("error");
-      setShowModal(true);
+      alert("Error al enviar la constancia de buena conducta. Por favor, inténtalo de nuevo.");
     }
   };
 
@@ -126,7 +100,7 @@ const PermanentSeatCertificateForm = () => {
     <CContainer>
       <CCard className="shadow-sm">
         <CCardHeader className="bg-primary text-white">
-          <h2>Solicitar Constancia de Asiento Permanente</h2>
+          <h2>Solicitar Constancia de Buena Conducta</h2>
         </CCardHeader>
         <CCardBody>
           <CForm onSubmit={handleSubmit}>
@@ -171,45 +145,53 @@ const PermanentSeatCertificateForm = () => {
               <CCol>
                 <CFormInput
                   type="text"
-                  name="deceasedName"
-                  label="Nombre del Ciudadano Fallecido"
-                  value={formData.deceasedName}
+                  name="citizenId"
+                  label="Cédula del Ciudadano"
+                  value={formData.citizenId}
                   onChange={handleChange}
-                  placeholder="Ingrese el nombre del ciudadano fallecido"
+                  placeholder="Ingrese la cédula del ciudadano"
                   required
                 />
               </CCol>
               <CCol>
                 <CFormInput
                   type="text"
-                  name="deceasedId"
-                  label="Cédula del Ciudadano Fallecido"
-                  value={formData.deceasedId}
+                  name="citizenName"
+                  label="Nombre del Ciudadano"
+                  value={formData.citizenName}
                   onChange={handleChange}
-                  placeholder="Ingrese la cédula del ciudadano fallecido"
+                  placeholder="Ingrese el nombre del ciudadano"
                   required
                 />
               </CCol>
             </CRow>
             <CRow className="mb-3">
-              <CCol>
-                <CFormInput
-                  type="date"
-                  name="deathDate"
-                  label="Fecha de Fallecimiento"
-                  value={formData.deathDate}
+             <CCol>
+                <CFormSelect
+                  name="citizenNationality"
+                  label="Nacionalidad del Ciudadano"
+                  value={formData.citizenNationality}
                   onChange={handleChange}
                   required
-                />
+                >
+                  <option value="">Selecciona una nacionalidad</option>
+                  {countries.map((country) => (
+                    <option key={country.id} value={country.name}>
+                      {country.name}
+                    </option>
+                  ))}
+                </CFormSelect>
               </CCol>
+            </CRow>
+            <CRow className="mb-3">
               <CCol>
                 <CFormInput
                   type="text"
-                  name="deathCertificateNumber"
-                  label="Número de Acta de Defunción"
-                  value={formData.deathCertificateNumber}
+                  name="reason"
+                  label="Motivo de la Constancia"
+                  value={formData.reason}
                   onChange={handleChange}
-                  placeholder="Ingrese el número de acta de defunción"
+                  placeholder="Ingrese el motivo de la constancia"
                   required
                 />
               </CCol>
@@ -267,23 +249,8 @@ const PermanentSeatCertificateForm = () => {
           </CForm>
         </CCardBody>
       </CCard>
-
-      {/* Modal de Mensajes (Éxito/Error) */}
-      <CModal visible={showModal} onClose={() => setShowModal(false)}>
-        <CModalHeader onClose={() => setShowModal(false)}>
-          <CModalTitle>{modalTitle}</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>{modalMessage}</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color={modalType === "success" ? "success" : "danger"} onClick={() => setShowModal(false)}>
-            Cerrar
-          </CButton>
-        </CModalFooter>
-      </CModal>
     </CContainer>
   );
 };
 
-export default PermanentSeatCertificateForm;
+export default goodbehaviorCertificateForm;

@@ -21,7 +21,7 @@ import { helpFetch } from '../../../components/helpers/helpFetch';
 const api = helpFetch();
 
 const Login = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState(''); // Cambiado de username a email
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -41,15 +41,16 @@ const Login = () => {
       const usersRes = await api.get("users");
 
       if (!usersRes.err) {
-        const user = usersRes.find(user => user.name === username && user.password === password);
-        navigate('/dashboard');
+        // Cambiado username por email
+        const user = usersRes.find(user => user.email === email && user.password === password);
+        
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));
           const options = { body: user };
           await api.post("loggedInUsers", options);
-          
+          navigate('/dashboard');
         } else {
-          setErrorMessage('Invalid username or password');
+          setErrorMessage('Invalid email or password'); // Cambiado mensaje de error
         }
       } else {
         setErrorMessage('Error fetching user data');
@@ -72,9 +73,9 @@ const Login = () => {
                     <p className="text-body-secondary">Sign In to your account</p>
                     <InputGroup
                       icon={cilUser }
-                      placeholder="Username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      placeholder="Email" // Cambiado de Username a Email
+                      value={email} // Cambiado de username a email
+                      onChange={(e) => setEmail(e.target.value)} // Cambiado de username a email
                     />
                     <InputGroup
                       icon={cilLockLocked}
@@ -85,7 +86,7 @@ const Login = () => {
                     />
                     <CRow>
                       <CCol xs={6}>
-                        <CButton type='submit' id="login" color="primary" className="px-4" style={{ backgroundColor: '#556B2F', border: 'none' }}>
+                        <CButton type='submit' id="login" color="primary" className="px-4 bg-primary text-white" style={{ border: 'none' }}>
                           Login
                         </CButton>
                       </CCol>
@@ -99,12 +100,12 @@ const Login = () => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white" style={{ backgroundColor: '#556B2F', width: '44%', border: 'none', paddingTop:"100px" }}>
+              <CCard className="text-white bg-primary text-white" style={{width: '44%', border: 'none', paddingTop: "100px" }}>
                 <CCardBody className="text-center">
-                  <div className="text-center mb-4" style={{display:"-ms-flexbox", justifyContent:"space-between"}}>
+                  <div className="text-center mb-4" style={{ display: "-ms-flexbox", justifyContent: "space-between" }}>
                     <h3>Regístrate con nosotros</h3>
                     <Link to="/register">
-                      <CButton style={{backgroundColor:"white", color:"black"}}>Crear una Cuenta</CButton>
+                      <CButton style={{ backgroundColor: "white", color: "black" }}>Crear una Cuenta</CButton>
                     </Link>
                   </div>
                 </CCardBody>

@@ -10,12 +10,7 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CContainer,
-  CModal,         // Importar CModal
-  CModalHeader,   // Importar CModalHeader
-  CModalTitle,    // Importar CModalTitle
-  CModalBody,     // Importar CModalBody
-  CModalFooter,   // Importar CModalFooter
+  CContainer
 } from "@coreui/react";
 
 const MovingPermitForm = () => {
@@ -30,12 +25,6 @@ const MovingPermitForm = () => {
     vehicleId: "", // ID del vehículo seleccionado
     document: null // Para el documento de mudanza
   });
-
-  // Estados para el modal de mensajes (éxito/error de API)
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [modalTitle, setModalTitle] = useState("");
-  const [modalType, setModalType] = useState(""); // 'success' o 'error' para el color del botón
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,22 +65,9 @@ const MovingPermitForm = () => {
 
     const response = await api.post("movingPermits", { body: movingPermitRequest });
     if (!response.error) {
-      setModalTitle("¡Éxito!");
-      setModalMessage("¡Permiso de mudanza enviado con éxito!");
-      setModalType("success");
-      setShowModal(true);
-      // Opcional: resetear el formulario después de un envío exitoso
-      setFormData((prevState) => ({
-        ...prevState, // Mantener userId y userName autocompletados si el usuario está logueado
-        arrivalPlace: "",
-        vehicleId: "",
-        document: null // Resetear el documento
-      }));
+      alert("¡Permiso de mudanza enviado con éxito!");
     } else {
-      setModalTitle("Error");
-      setModalMessage("Error al enviar el permiso de mudanza. Por favor, inténtalo de nuevo.");
-      setModalType("error");
-      setShowModal(true);
+      alert("Error al enviar el permiso de mudanza. Por favor, inténtalo de nuevo.");
     }
   };
 
@@ -179,21 +155,6 @@ const MovingPermitForm = () => {
           </CForm>
         </CCardBody>
       </CCard>
-
-      {/* Modal de Mensajes (Éxito/Error) */}
-      <CModal visible={showModal} onClose={() => setShowModal(false)}>
-        <CModalHeader onClose={() => setShowModal(false)}>
-          <CModalTitle>{modalTitle}</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>{modalMessage}</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color={modalType === "success" ? "success" : "danger"} onClick={() => setShowModal(false)}>
-            Cerrar
-          </CButton>
-        </CModalFooter>
-      </CModal>
     </CContainer>
   );
 };

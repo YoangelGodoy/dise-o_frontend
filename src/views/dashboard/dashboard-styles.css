@@ -1,0 +1,244 @@
+.stats-card {
+  border-radius: 15px !important;
+  overflow: hidden;
+  position: relative;
+}
+
+.stats-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
+.card-hover:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Iconos de estadísticas */
+.stats-icon-wrapper {
+  position: relative;
+}
+
+.stats-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Números y texto */
+.stats-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stats-title {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stats-subtitle {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Indicador de tendencia */
+.trend-indicator {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.trend-badge {
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* Progreso moderno */
+.progress-modern {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.progress-modern .progress-bar {
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Botones modernos */
+.btn-modern {
+  border-radius: 10px;
+  font-weight: 600;
+  border: none;
+  backdrop-filter: blur(10px);
+}
+
+.btn-modern:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Gradientes - COLORES MODIFICADOS */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #2C3E50 0%, #1A5276 100%) !important; /* Dark Blue a Darker Blue */
+}
+
+.bg-gradient-info {
+  background: linear-gradient(135deg, #2980B9 0%, #1A5276 100%) !important; /* Blue a Darker Blue */
+}
+
+.bg-gradient-success {
+  background: linear-gradient(135deg, #28B463 0%, #1E8449 100%) !important; /* Nuevo Verde */
+}
+
+.bg-gradient-warning {
+  background: linear-gradient(135deg, #F39C12 0%, #D68910 100%) !important; /* Nuevo Naranja/Amarillo */
+}
+
+.bg-gradient-danger {
+  background: linear-gradient(135deg, #C0392B 0%, #A93226 100%) !important; /* Red a Darker Red */
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(135deg, #34495E 0%, #2C3E50 100%) !important; /* Gris oscuro a Dark Blue */
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(135deg, #BDC3C7 0%, #95A5A6 100%) !important; /* Gris claro a Gris medio */
+}
+
+/* Header card */
+.header-card {
+  border-radius: 20px !important;
+  overflow: hidden;
+}
+
+.status-badge {
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Summary section */
+.summary-section {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.alert-modern {
+  border-radius: 15px;
+  border: none;
+  /* Ajustado para usar el azul principal */
+  background: linear-gradient(135deg, rgba(41, 128, 185, 0.1) 0%, rgba(41, 128, 185, 0.05) 100%);
+  backdrop-filter: blur(10px);
+}
+
+.alert-icon {
+  width: 50px;
+  height: 50px;
+  /* Ajustado para usar el azul principal */
+  background: rgba(41, 128, 185, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert-title {
+  /* Ajustado para usar el azul principal */
+  color: #2980B9;
+  font-weight: 700;
+}
+
+/* Counter */
+.total-counter {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.counter-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+/* Chart cards */
+.chart-card {
+  border-radius: 20px !important;
+  overflow: hidden;
+}
+
+/* Action cards */
+.actions-card {
+  border-radius: 20px !important;
+  overflow: hidden;
+}
+
+.action-card {
+  cursor: pointer;
+  border-radius: 15px !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  pointer-events: none;
+}
+
+.action-card:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Utilidades de color */
+.text-white-75 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.text-white-50 {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Sombras */
+.shadow-lg {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stats-number {
+    font-size: 2rem;
+  }
+
+  .display-6 {
+    font-size: 1.75rem !important;
+  }
+
+  .stats-icon {
+    width: 50px;
+    height: 50px;
+  }
+}

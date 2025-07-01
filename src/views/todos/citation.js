@@ -10,12 +10,7 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CContainer,
-  CModal,         // Importar CModal
-  CModalHeader,   // Importar CModalHeader
-  CModalTitle,    // Importar CModalTitle
-  CModalBody,     // Importar CModalBody
-  CModalFooter,   // Importar CModalFooter
+  CContainer
 } from "@coreui/react";
 
 const CitationRequestForm = () => {
@@ -23,7 +18,7 @@ const CitationRequestForm = () => {
   const [loggedInUser , setLoggedInUser ] = useState(null);
   const [prefectures, setPrefectures] = useState([]);
   const [parishes, setParishes] = useState([]);
-  const [filteredParishes, setFilteredParishes] = useState([]);
+  const [filteredParishes, setFilteredParishes] = useState([]); 
   const [formData, setFormData] = useState({
     prefecture: "",
     name: "",
@@ -33,29 +28,26 @@ const CitationRequestForm = () => {
     status:"Pendiente"
   });
 
-  // Estados para el modal de confirmación/éxito
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [modalTitle, setModalTitle] = useState("");
-
   useEffect(() => {
     const fetchData = async () => {
+
       const loggedInUserId = JSON.parse(localStorage.getItem('user')).id;
       if (loggedInUserId) {
+ 
         const response = await api.get(`loggedInUsers/${loggedInUserId}`);
         if (!response.error) {
           setLoggedInUser (response);
           setFormData((prevState) => ({
             ...prevState,
-            name: response.name,
-            lastName: response.lastName
+            name: response.name, 
+            lastName: response.lastName 
           }));
         }
       }
 
       const prefecturesResponse = await api.get("prefecture");
       if (!prefecturesResponse.error) setPrefectures(prefecturesResponse);
-
+    
       const parishesResponse = await api.get("parishes");
       if (!parishesResponse.error) setParishes(parishesResponse);
     };
@@ -70,15 +62,16 @@ const CitationRequestForm = () => {
       [name]: value
     });
 
+   
     if (name === "prefecture") {
       const selectedPrefectureId = value;
       const selectedPrefecture = prefectures.find(pref => pref.id === selectedPrefectureId);
-
+      
       if (selectedPrefecture) {
         const filtered = parishes.filter(parish => parish.municipality_id === selectedPrefecture.municipality_id);
         setFilteredParishes(filtered);
       } else {
-        setFilteredParishes([]);
+        setFilteredParishes([]); 
       }
     }
   };
@@ -92,22 +85,10 @@ const CitationRequestForm = () => {
 
     const response = await api.post("citationRequests", { body: citationRequest });
     if (!response.error) {
-      setModalTitle("¡Éxito!");
-      setModalMessage("¡Solicitud de citación enviada con éxito!");
-      setShowModal(true);
-      // Opcional: resetear el formulario después de un envío exitoso
-      setFormData({
-        prefecture: "",
-        name: loggedInUser ? loggedInUser.name : "", // Mantener autocompletado si el usuario está logueado
-        lastName: loggedInUser ? loggedInUser.lastName : "", // Mantener autocompletado si el usuario está logueado
-        residentialAddress: "",
-        parish: "",
-        status:"Pendiente"
-      });
+      alert("¡Solicitud de citación enviada con éxito!");
+     
     } else {
-      setModalTitle("Error");
-      setModalMessage("Error al enviar la solicitud de citación. Por favor, inténtalo de nuevo.");
-      setShowModal(true);
+      alert("Error al enviar la solicitud de citación. Por favor, inténtalo de nuevo.");
     }
   };
 
@@ -198,21 +179,6 @@ const CitationRequestForm = () => {
           </CForm>
         </CCardBody>
       </CCard>
-
-      {/* Modal de Confirmación/Mensaje */}
-      <CModal visible={showModal} onClose={() => setShowModal(false)}>
-        <CModalHeader onClose={() => setShowModal(false)}>
-          <CModalTitle>{modalTitle}</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>{modalMessage}</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="secondary" onClick={() => setShowModal(false)}>
-            Cerrar
-          </CButton>
-        </CModalFooter>
-      </CModal>
     </CContainer>
   );
 };

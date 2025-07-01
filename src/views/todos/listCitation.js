@@ -13,11 +13,6 @@ import {
   CTableDataCell,
   CButton,
   CFormInput,
-  CModal,         // Importar CModal
-  CModalHeader,   // Importar CModalHeader
-  CModalTitle,    // Importar CModalTitle
-  CModalBody,     // Importar CModalBody
-  CModalFooter,   // Importar CModalFooter
 } from "@coreui/react"
 import { cilCheck, cilTrash, cilSearch, cilCloudDownload, cilDataTransferDown } from "@coreui/icons"
 import { CIcon } from "@coreui/icons-react"
@@ -28,18 +23,6 @@ const CitationRequestList = () => {
   const [filterDate, setFilterDate] = useState("")
   const [filterName, setFilterName] = useState("")
 
-  // Estados para el modal de eliminación
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [selectedRequestId, setSelectedRequestId] = useState(null)
-
-  // Estados para el modal de estado
-  const [showStatusModal, setShowStatusModal] = useState(false)
-  const [currentStatusMessage, setCurrentStatusMessage] = useState("")
-
-  // Estados para el modal de error general
-  const [showErrorModal, setShowErrorModal] = useState(false)
-  const [errorMessage, setErrorMessage] = useState("")
-
   useEffect(() => {
     const fetchCitationRequests = async () => {
       const response = await api.get("citationRequests")
@@ -48,30 +31,25 @@ const CitationRequestList = () => {
           const requestDate = new Date(request.requestDate)
           const dueDate = new Date(requestDate)
           dueDate.setDate(requestDate.getDate() + 2)
-          return { ...request, dueDate: dueDate.toISOString(), status: request.status || "Pendiente" } // Asegurar "Pendiente" con mayúscula inicial
+          return { ...request, dueDate: dueDate.toISOString(), status: request.status || "pendiente" }
         })
         setCitationRequests(updatedRequests)
       } else {
-        setErrorMessage("Error al cargar las solicitudes de citación.")
-        setShowErrorModal(true)
+        alert("Error al cargar las solicitudes de citación.")
       }
     }
 
     fetchCitationRequests()
-  }, [api]) // Removed api.get from dependencies, api is stable
+  }, [api.get]) // Added api.get to dependencies
 
-  const handleDelete = async () => {
-    const response = await api.delet("citationRequests", selectedRequestId)
+  const handleDelete = async (id) => {
+    const response = await api.delet("citationRequests", id)
     if (!response.error) {
-      setCitationRequests(citationRequests.filter((request) => request.id !== selectedRequestId))
-      setModalMessage("Solicitud de citación eliminada con éxito.")
-      setShowStatusModal(true) // Reutilizamos el modal de estado para mensajes de éxito
+      setCitationRequests(citationRequests.filter((request) => request.id !== id))
+      alert("Solicitud de citación eliminada con éxito.")
     } else {
-      setErrorMessage("Error al eliminar la solicitud de citación.")
-      setShowErrorModal(true)
+      alert("Error al eliminar la solicitud de citación.")
     }
-    setShowDeleteModal(false) // Cerrar el modal de confirmación de eliminación
-    setSelectedRequestId(null) // Limpiar el ID seleccionado
   }
 
   const handleChangeStatus = async (id) => {
@@ -86,11 +64,9 @@ const CitationRequestList = () => {
 
     if (!response.error) {
       setCitationRequests(citationRequests.map((req) => (req.id === id ? { ...req, status: nextStatus } : req)))
-      setCurrentStatusMessage(`Estado de la solicitud actualizado a: ${nextStatus}.`)
-      setShowStatusModal(true)
+      alert("Estado de la solicitud actualizado con éxito.")
     } else {
-      setErrorMessage("Error al actualizar el estado de la solicitud.")
-      setShowErrorModal(true)
+      alert("Error al actualizar el estado de la solicitud.")
     }
   }
 
@@ -100,7 +76,7 @@ const CitationRequestList = () => {
     } else if (currentStatus === "Listo") {
       return "Entregado"
     }
-    return currentStatus // No cambiar si ya es "Entregado"
+    return currentStatus // No cambiar si ya es "entregado"
   }
 
   const getButtonColor = (status) => {
@@ -108,11 +84,11 @@ const CitationRequestList = () => {
       case "Pendiente":
         return "warning"
       case "Listo":
-        return "info"
+        return "info" 
       case "Entregado":
-        return "success"
+        return "success" 
       default:
-        return "secondary"
+        return "secondary" 
     }
   }
 
@@ -170,25 +146,22 @@ const CitationRequestList = () => {
                       color={getButtonColor(request.status)}
                       className="text-white"
                       onClick={() => handleChangeStatus(request.id)}
-                      disabled={request.status === "Entregado"} // Deshabilitar si ya está entregado
+                      disabled={request.status === "entregado"} // Deshabilitar si ya está entregado
                       style={{ marginRight: "7px" }}
                     >
                       <CIcon icon={cilCheck} />
                     </CButton>
-                    <CButton
-                      color="danger"
-                      className="text-white"
-                      onClick={() => {
-                        setSelectedRequestId(request.id)
-                        setShowDeleteModal(true)
-                      }}
+                    <CButton 
+                      color="danger" 
+                      className="text-white" 
+                      onClick={() => handleDelete(request.id)}
                       style={{ marginRight: "7px" }}
                     >
                       <CIcon icon={cilTrash} />
                     </CButton>
-                    <CButton
-                      color="primary"
-                      className="text-white"
+                    <CButton 
+                      color="primary" 
+                      className="text-white" 
                     >
                       <CIcon icon={cilDataTransferDown} />
                     </CButton>
@@ -199,48 +172,9 @@ const CitationRequestList = () => {
           </CTable>
         </CCardBody>
       </CCard>
-
-      {/* Modal de Confirmación de Eliminación */}
-      <CModal visible={showDeleteModal} onClose={() => setShowDeleteModal(false)}>
-        <CModalHeader onClose={() => setShowDeleteModal(false)}>
-          <CModalTitle>Confirmar Eliminación</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>¿Estás seguro de que deseas eliminar esta solicitud de citación?</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="secondary" onClick={() => setShowDeleteModal(false)}>Cancelar</CButton>
-          <CButton color="danger" onClick={handleDelete}>Eliminar</CButton>
-        </CModalFooter>
-      </CModal>
-
-      {/* Modal de Estado de la Solicitud (para éxito o actualización de estado) */}
-      <CModal visible={showStatusModal} onClose={() => setShowStatusModal(false)}>
-        <CModalHeader onClose={() => setShowStatusModal(false)}>
-          <CModalTitle>Estado de la Solicitud</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>{currentStatusMessage}</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="secondary" onClick={() => setShowStatusModal(false)}>Cerrar</CButton>
-        </CModalFooter>
-      </CModal>
-
-      {/* Modal de Error General */}
-      <CModal visible={showErrorModal} onClose={() => setShowErrorModal(false)}>
-        <CModalHeader onClose={() => setShowErrorModal(false)}>
-          <CModalTitle>Error</CModalTitle>
-        </CModalHeader>
-        <CModalBody>
-          <p>{errorMessage}</p>
-        </CModalBody>
-        <CModalFooter>
-          <CButton color="danger" onClick={() => setShowErrorModal(false)}>Cerrar</CButton>
-        </CModalFooter>
-      </CModal>
     </CContainer>
   )
 }
 
 export default CitationRequestList
+

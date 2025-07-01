@@ -1,0 +1,41 @@
+/* Estilos adicionales para el dashboard */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #321fdb 0%, #1f2937 100%) !important;
+}
+
+.bg-gradient-info {
+  background: linear-gradient(135deg, #39f 0%, #0056b3 100%) !important;
+}
+
+.bg-gradient-success {
+  background: linear-gradient(135deg, #2eb85c 0%, #1e7e34 100%) !important;
+}
+
+.bg-gradient-warning {
+  background: linear-gradient(135deg, #f9b115 0%, #e0a800 100%) !important;
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(135deg, #6c757d 0%, #495057 100%) !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+
+/* Animaciones para hover */
+.card:hover {
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fs-2 {
+    font-size: 1.5rem !important;
+  }
+}

@@ -1,56 +1,57 @@
 // Here you can add other styles
 .bg-primary {
-    background-color: #556B2F !important;
+    background-color: #2C3E50 !important; /* Dark Blue */
 }
-//botones
-.bottoms{
-    background-color: #556B2F !important;
+
+// botones
+.bottoms {
+    background-color: #2980B9 !important; /* Blue */
     color: white;
 }
-:hover.bottoms{
-    background-color: #425324 !important;
+:hover.bottoms {
+    background-color: #1A5276 !important; /* Darker Blue */
     color: white;
 }
-.simplebar-content .active{
-    background-color:#425324 !important ;
+.simplebar-content .active {
+    background-color: #1A5276 !important; /* Darker Blue */
 }
-.simplebar-content .nav-link:hover{
-    background-color: #425324 !important;
+.simplebar-content .nav-link:hover {
+    background-color: #1A5276 !important; /* Darker Blue */
 }
-.update{
+.update {
     width: 2.6cm;
     color: white;
-    background-color: #556B2F;
+    background-color: #2980B9; /* Blue */
     display: table-row;
     margin-right: 0.3cm;
 }
-:hover.update{
-    background-color: #425324;
+:hover.update {
+    background-color: #1A5276; /* Darker Blue */
     color: white;
 }
 
-.delete{
+.delete {
     width: 2cm;
     color: white;
-    background-color: red;
+    background-color: #C0392B; /* Red */
 }
-:hover.delete{
-    background-color: rgb(180, 0, 0);
+:hover.delete {
+    background-color: #A93226; /* Darker Red */
     color: white;
 }
 
-#login{
-    background-color: #556B2F;
-    border-color: #556B2F;
+#login {
+    background-color: #2980B9; /* Blue */
+    border-color: #2980B9; /* Blue */
     color: white;
 }
-.px-0{
+.px-0 {
     color: black !important;
 }
 
 #register {
-    background-color: white;
-    border-color: white;
+    background-color: #ECF0F1; /* Light Gray */
+    border-color: #ECF0F1; /* Light Gray */
     color: black;
 }
 
@@ -58,24 +59,24 @@
     color: white;
 }
 
-#title{
+#title {
     width: 0.3cm;
     height: 0.3cm;
     display: table-row;
-    justify-content:center;
+    justify-content: center;
     text-align: center;
 }
-.update{
+.update {
     width: 1.5cm;
     height: 1cm !important;
 }
-.delete{
+.delete {
     width: 1.5cm;
-    height: 1cm !important ;
+    height: 1cm !important;
 }
 .table td, .table th {
     padding: 0.2rem; 
-  }
+}
 
 .login-background {
     background-image: url("/src/assets/images/fondo_michelena.jpg"); 
@@ -83,42 +84,42 @@
     background-position: center;
     height: 100vh;
 }
-.logo{
+.logo {
     height: 80px !important;
 }
 
-.modal{
-    background-color: #00000083;
+.modal {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent Black */
 }
 
-#ConfirmDelete{
+#ConfirmDelete {
     color: white !important;
-    background-color: red;
+    background-color: #C0392B; /* Red */
 }
-//logo del panel principal
-.border-bottom-logo{
-    border-bottom: solid white 0.1px!important;
+
+// logo del panel principal
+.border-bottom-logo {
+    border-bottom: solid white 0.1px !important;
     width: 100cm !important;
 }
-.border-top-logo{
-    border-top: solid white 0.1px!important;
+.border-top-logo {
+    border-top: solid white 0.1px !important;
     width: 50cm !important;
 }
-//table clients 
+
+// table clients 
 .custom-table {
-    border-radius: 0.5rem; /* Ajusta el valor según sea necesario */
-    overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
-  }
+    border-radius: 0.5rem; /* Adjust as necessary */
+    overflow: hidden; /* Ensures rounded borders are applied correctly */
+}
 
-
-/* .login-right{
+/* .login-right {
     background-color: red !important;
 } */
-// #img1{
+// #img1 {
 //     margin-right: 10px;
 // }
-// #h2logo{
-
+// #h2logo {
 //     text-decoration: blue;
 //     border-bottom: blue;
 // }

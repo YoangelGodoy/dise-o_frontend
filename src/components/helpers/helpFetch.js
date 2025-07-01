@@ -1,5 +1,5 @@
 export const helpFetch = () => {
-    const URL = "https://dise-o-frontend-1.onrender.com/";
+    const URL = "https://json-prefec-1.onrender.com/";
 
     const customFetch = (endpoint, options = {}) => {
         options.method = options.method || "GET";

@@ -10,7 +10,12 @@ import {
   CCardHeader,
   CCol,
   CRow,
-  CContainer
+  CContainer,
+  CModal,         // Importar CModal
+  CModalHeader,   // Importar CModalHeader
+  CModalTitle,    // Importar CModalTitle
+  CModalBody,     // Importar CModalBody
+  CModalFooter,   // Importar CModalFooter
 } from "@coreui/react";
 
 const goodbehaviorCertificateForm = () => {
@@ -32,7 +37,13 @@ const goodbehaviorCertificateForm = () => {
     witness2Id: "",
     status:"Pendiente"
   });
-  const [error, setError] = useState("");
+  const [error, setError] = useState(""); // Este error es para la validación de testigos
+
+  // Estados para el modal de mensajes (éxito/error de API)
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalType, setModalType] = useState(""); // 'success' o 'error' para el color del botón
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +73,7 @@ const goodbehaviorCertificateForm = () => {
     if (name === "prefecture") {
       const selectedPrefectureId = value;
       const selectedPrefecture = prefectures.find(pref => pref.id === selectedPrefectureId);
-      
+
       if (selectedPrefecture) {
         const filtered = parishes.filter(parish => parish.municipality_id === selectedPrefecture.municipality_id);
         setFilteredParishes(filtered);
@@ -74,9 +85,9 @@ const goodbehaviorCertificateForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validar que los testigos no sean el mismo
-    if (formData.witness1Id === formData.witness2Id) {
+    if (formData.witness1Id && formData.witness2Id && formData.witness1Id === formData.witness2Id) {
       setError("Los testigos no pueden ser la misma persona.");
       return;
     } else {
@@ -90,9 +101,28 @@ const goodbehaviorCertificateForm = () => {
 
     const response = await api.post("goodbehaviorCertificates", { body: goodbehaviorCertificate });
     if (!response.error) {
-      alert("¡Constancia de buena conducta enviada con éxito!");
+      setModalTitle("¡Éxito!");
+      setModalMessage("¡Constancia de buena conducta enviada con éxito!");
+      setModalType("success");
+      setShowModal(true);
+      // Opcional: resetear el formulario después de un envío exitoso
+      setFormData({
+        prefecture: "",
+        parish: "",
+        citizenId: "",
+        citizenName: "",
+        citizenNationality: "",
+        reason: "",
+        residentialAddress: "",
+        witness1Id: "",
+        witness2Id: "",
+        status:"Pendiente"
+      });
     } else {
-      alert("Error al enviar la constancia de buena conducta. Por favor, inténtalo de nuevo.");
+      setModalTitle("Error");
+      setModalMessage("Error al enviar la constancia de buena conducta. Por favor, inténtalo de nuevo.");
+      setModalType("error");
+      setShowModal(true);
     }
   };
 
@@ -249,6 +279,21 @@ const goodbehaviorCertificateForm = () => {
           </CForm>
         </CCardBody>
       </CCard>
+
+      {/* Modal de Mensajes (Éxito/Error) */}
+      <CModal visible={showModal} onClose={() => setShowModal(false)}>
+        <CModalHeader onClose={() => setShowModal(false)}>
+          <CModalTitle>{modalTitle}</CModalTitle>
+        </CModalHeader>
+        <CModalBody>
+          <p>{modalMessage}</p>
+        </CModalBody>
+        <CModalFooter>
+          <CButton color={modalType === "success" ? "success" : "danger"} onClick={() => setShowModal(false)}>
+            Cerrar
+          </CButton>
+        </CModalFooter>
+      </CModal>
     </CContainer>
   );
 };
