@@ -339,7 +339,7 @@ const VehicleRegistration = () => {
                     />
                   </CCol>
                 </CRow>
-                <CButton type="submit" className="mt-3 bottoms">
+                <CButton type="submit" className="bg-primary mt-3 bottoms">
                   {updateData ? "Actualizar" : "Registrar"}
                 </CButton>
                 <CButton type="button" color="secondary" className="mt-3 ms-2" onClick={() => setModalVisible(false)}>

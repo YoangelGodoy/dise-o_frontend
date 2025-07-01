@@ -261,7 +261,7 @@ const PermanentSeatCertificateForm = () => {
                 </CFormSelect>
               </CCol>
             </CRow>
-            <CButton type="submit" className="bottoms">
+            <CButton type="submit" className="bg-primary bottoms">
               Enviar Solicitud
             </CButton>
           </CForm>

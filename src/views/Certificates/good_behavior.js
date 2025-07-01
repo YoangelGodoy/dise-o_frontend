@@ -273,7 +273,7 @@ const goodbehaviorCertificateForm = () => {
                 </CFormSelect>
               </CCol>
             </CRow>
-            <CButton type="submit" className="bottoms">
+            <CButton type="submit" className="bottoms bg-primary">
               Enviar Solicitud
             </CButton>
           </CForm>
