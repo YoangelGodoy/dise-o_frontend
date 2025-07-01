@@ -176,7 +176,7 @@ const ACitizens = () => {
                 style={{ width: '300px', marginLeft:"10px",marginRight:"600px"}}
               />
               <CButton color="success" onClick={() => setModalVisible(true)}>
-                <CIcon icon={cilUserPlus} />
+                <CIcon icon={cilUserPlus} style={{ color: 'white' }} />
               </CButton>
             </CCardHeader>
             <CCardBody>

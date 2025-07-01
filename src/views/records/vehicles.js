@@ -157,8 +157,8 @@ const VehicleRegistration = () => {
               <h2>Lista de Vehículos</h2>
             </CCardHeader>
             <CCardBody>
-              <CButton color="success" onClick={() => setModalVisible(true)}>
-                <CIcon icon={cilPlus} /> Registrar Vehículo
+              <CButton color="success"style={{ color: 'white' }} onClick={() => setModalVisible(true)}>
+                <CIcon icon={cilPlus} style={{ color: 'white' }}/> Registrar Vehículo
               </CButton>
               <CTable hover responsive className='custom-table mt-3'>
                 <CTableHead className="table-light">
