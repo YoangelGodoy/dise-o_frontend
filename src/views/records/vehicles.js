@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { helpFetch } from '../../components/helpers/helpFetch';
+"use client"
+
+import { useEffect, useState } from "react"
+import { helpFetch } from "../../components/helpers/helpFetch"
 import {
   CForm,
   CFormInput,
@@ -16,152 +18,151 @@ import {
   CTableRow,
   CTableHeaderCell,
   CTableBody,
-  CTableDataCell
-} from '@coreui/react';
-import { CIcon } from '@coreui/icons-react'; 
-import { cilPencil, cilPlus, cilTrash } from '@coreui/icons'; 
-import '../../scss/_custom.scss';
+  CTableDataCell,
+} from "@coreui/react"
+import { CIcon } from "@coreui/icons-react"
+import { cilPencil, cilPlus, cilTrash } from "@coreui/icons"
+import "../../scss/_custom.scss"
 
 const VehicleRegistration = () => {
-  const api = helpFetch();
-  const [vehicles, setVehicles] = useState([]);
-  const [brands, setBrands] = useState([]);
-  const [models, setModels] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalVisible2, setModalVisible2] = useState(false);
-  const [vehicleToDelete, setVehicleToDelete] = useState(null);
-  const [updateData, setUpdateData] = useState(null);
+  const api = helpFetch()
+  const [vehicles, setVehicles] = useState([])
+  const [brands, setBrands] = useState([])
+  const [models, setModels] = useState([])
+  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible2, setModalVisible2] = useState(false)
+  const [vehicleToDelete, setVehicleToDelete] = useState(null)
+  const [updateData, setUpdateData] = useState(null)
   const [formData, setFormData] = useState({
-    vehicleBrand: '',
-    vehicleModel: '',
-    vehicleYear: '',
-    vehicleColor: '',
-    vehicleClass: '',
-    vehiclePlate: '',
-    engineSerial: '',
-    chassisSerial: '',
-    created_at: '',
-    updated_at: '',
+    vehicleBrand: "",
+    vehicleModel: "",
+    vehicleYear: "",
+    vehicleColor: "",
+    vehicleClass: "",
+    vehiclePlate: "",
+    engineSerial: "",
+    chassisSerial: "",
+    created_at: "",
+    updated_at: "",
     id: null,
-  });
+  })
 
   useEffect(() => {
     const fetchVehicles = async () => {
-      const response = await api.get("vehicles");
-      if (!response.error) setVehicles(response);
-    };
+      const response = await api.get("vehicles")
+      if (!response.error) setVehicles(response)
+    }
 
     const fetchBrands = async () => {
-      const response = await api.get("brands"); // Cambia "brands" por la ruta correcta
-      if (!response.error) setBrands(response);
-    };
+      const response = await api.get("brands")
+      if (!response.error) setBrands(response)
+    }
 
     const fetchModels = async () => {
-      const response = await api.get("models"); // Cambia "models" por la ruta correcta
-      if (!response.error) setModels(response);
-    };
+      const response = await api.get("models")
+      if (!response.error) setModels(response)
+    }
 
-    fetchVehicles();
-    fetchBrands();
-    fetchModels();
-  }, []);
+    fetchVehicles()
+    fetchBrands()
+    fetchModels()
+  }, [])
 
   const addVehicle = (vehicle) => {
-    const options = { body: vehicle };
-    
+    const options = { body: vehicle }
+
     api.post("vehicles", options).then((response) => {
-      if (!response.error) setVehicles([...vehicles, response]);
-    });
-  };
+      if (!response.error) setVehicles([...vehicles, response])
+    })
+  }
 
   const updateVehicle = (vehicle) => {
-    const options = { body: { ...vehicle, updated_at: new Date().toISOString() } };
-
+    const options = { body: { ...vehicle, updated_at: new Date().toISOString() } }
     api.put("vehicles", options, vehicle.id).then((response) => {
       if (!response.error) {
-        const newVehicles = vehicles.map(el => el.id === vehicle.id ? response : el);
-        setVehicles(newVehicles);
-        setUpdateData(null);
+        const newVehicles = vehicles.map((el) => (el.id === vehicle.id ? response : el))
+        setVehicles(newVehicles)
+        setUpdateData(null)
       }
-    });
-  };
+    })
+  }
 
   const deleteVehicle = (id) => {
-    setVehicleToDelete(id);
-    setModalVisible2(true);
-  };
+    setVehicleToDelete(id)
+    setModalVisible2(true)
+  }
 
   const confirmDelete = () => {
     if (vehicleToDelete) {
-      api.delete("vehicles", vehicleToDelete).then((response) => {
+      api.delet("vehicles", vehicleToDelete).then((response) => {
         if (!response.error) {
-          const newVehicles = vehicles.filter(el => el.id !== vehicleToDelete);
-          setVehicles(newVehicles);
+          const newVehicles = vehicles.filter((el) => el.id !== vehicleToDelete)
+          setVehicles(newVehicles)
         }
-      });
+      })
     }
-    setModalVisible2(false);
-    setVehicleToDelete(null);
-  };
+    setModalVisible2(false)
+    setVehicleToDelete(null)
+  }
 
   const cancelDelete = () => {
-    setModalVisible2(false);
-    setVehicleToDelete(null);
-  };
+    setModalVisible2(false)
+    setVehicleToDelete(null)
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (updateData != null) {
-      updateVehicle(formData);
+      updateVehicle(formData)
     } else {
-      const currentDate = new Date().toISOString();
-      formData.created_at = currentDate;
-      formData.updated_at = currentDate;
-      formData.id = Date.now().toString();
-      addVehicle(formData);
+      const currentDate = new Date().toISOString()
+      formData.created_at = currentDate
+      formData.updated_at = currentDate
+      formData.id = Date.now().toString()
+      addVehicle(formData)
     }
-    resetForm();
-    setModalVisible(false);
-  };
+    resetForm()
+    setModalVisible(false)
+  }
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value 
-    });
-  };
+      [e.target.name]: e.target.value,
+    })
+  }
 
   const resetForm = () => {
     setFormData({
-      vehicleBrand: '',
-      vehicleModel: '',
-      vehicleYear: '',
-      vehicleColor: '',
-      vehicleClass: '',
-      vehiclePlate: '',
-      engineSerial: '',
-      chassisSerial: '',
-      created_at: '',
-      updated_at: '',
+      vehicleBrand: "",
+      vehicleModel: "",
+      vehicleYear: "",
+      vehicleColor: "",
+      vehicleClass: "",
+      vehiclePlate: "",
+      engineSerial: "",
+      chassisSerial: "",
+      created_at: "",
+      updated_at: "",
       id: null,
-    });
-    setUpdateData(null);
-  };
+    })
+    setUpdateData(null)
+  }
 
   return (
     <CContainer>
       <CRow>
         <CCol>
           <CCard className="shadow-sm">
-            <CCardHeader className='bg-primary text-white'>
+            <CCardHeader className="bg-primary text-white">
               <h2>Lista de Vehículos</h2>
             </CCardHeader>
             <CCardBody>
-              <CButton color="success"style={{ color: 'white' }} onClick={() => setModalVisible(true)}>
-                <CIcon icon={cilPlus} style={{ color: 'white' }}/> Registrar Vehículo
+              <CButton color="success" style={{ color: "white" }} onClick={() => setModalVisible(true)}>
+                <CIcon icon={cilPlus} style={{ color: "white" }} /> Registrar Vehículo
               </CButton>
-              <CTable hover responsive className='custom-table mt-3'>
-                <CTableHead className="table-light">
+              <CTable hover responsive className="custom-table mt-3">
+                <CTableHead>
                   <CTableRow>
                     <CTableHeaderCell>Marca</CTableHeaderCell>
                     <CTableHeaderCell>Modelo</CTableHeaderCell>
@@ -177,11 +178,11 @@ const VehicleRegistration = () => {
                 <CTableBody>
                   {vehicles.length === 0 ? (
                     <CTableRow>
-                      <CTableDataCell colSpan="8">No hay datos</CTableDataCell>
+                      <CTableDataCell colSpan="9">No hay datos</CTableDataCell>
                     </CTableRow>
                   ) : (
                     vehicles.map((vehicle) => (
-                      <CTableRow key={vehicle.id}>
+                      <CTableRow key={`vehicle-${vehicle.id}`}>
                         <CTableDataCell>{vehicle.vehicleBrand}</CTableDataCell>
                         <CTableDataCell>{vehicle.vehicleModel}</CTableDataCell>
                         <CTableDataCell>{vehicle.vehicleYear}</CTableDataCell>
@@ -190,11 +191,22 @@ const VehicleRegistration = () => {
                         <CTableDataCell>{vehicle.vehiclePlate}</CTableDataCell>
                         <CTableDataCell>{vehicle.engineSerial}</CTableDataCell>
                         <CTableDataCell>{vehicle.chassisSerial}</CTableDataCell>
-                        <CTableDataCell style={{display:"flex",justifyContent:"flex-end"}}>
-                          <CButton className="update" onClick={() => { setUpdateData(vehicle); setModalVisible(true); }}>
+                        <CTableDataCell style={{ display: "flex", justifyContent: "flex-end" }}>
+                          <CButton
+                            className="update"
+                            onClick={() => {
+                              setUpdateData(vehicle)
+                              setModalVisible(true)
+                            }}
+                          >
                             <CIcon icon={cilPencil} />
                           </CButton>
-                          <CButton className="delete" onClick={() => { deleteVehicle(vehicle.id); }}>
+                          <CButton
+                            className="delete"
+                            onClick={() => {
+                              deleteVehicle(vehicle.id)
+                            }}
+                          >
                             <CIcon icon={cilTrash} />
                           </CButton>
                         </CTableDataCell>
@@ -209,7 +221,11 @@ const VehicleRegistration = () => {
       </CRow>
 
       {/* Modal para Confirmar Eliminación */}
-      <div className={`modal ${modalVisible2 ? 'show' : ''}`} style={{ display: modalVisible2 ? 'block' : 'none' }} tabIndex="-1">
+      <div
+        className={`modal ${modalVisible2 ? "show" : ""}`}
+        style={{ display: modalVisible2 ? "block" : "none" }}
+        tabIndex="-1"
+      >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
@@ -220,24 +236,42 @@ const VehicleRegistration = () => {
               <p>¿Estás seguro de que deseas eliminar este registro?</p>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancelar</button>
-              <button type="button" style={{backgroundColor:"red"}} className="btn btn-danger text-white" onClick={confirmDelete}>Eliminar</button>
+              <button type="button" className="btn btn-secondary" onClick={cancelDelete}>
+                Cancelar
+              </button>
+              <button
+                type="button"
+                style={{ backgroundColor: "red" }}
+                className="btn btn-danger text-white"
+                onClick={confirmDelete}
+              >
+                Eliminar
+              </button>
             </div>
           </div>
         </div>
       </div>
 
       {/* Modal para Agregar/Actualizar Vehículo */}
-      <div className={`modal modal-lg modal-fade ${modalVisible ? 'show' : ''}`} style={{ display: modalVisible ? 'block' : 'none' }} tabIndex="-1">
+      <div
+        className={`modal modal-lg modal-fade ${modalVisible ? "show" : ""}`}
+        style={{ display: modalVisible ? "block" : "none" }}
+        tabIndex="-1"
+      >
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header bg-primary text-white">
               <h5 className="modal-title">{updateData ? "Actualizar Vehículo" : "Registrar Nuevo Vehículo"}</h5>
-              <button type="button" className="btn-close" onClick={() => setModalVisible(false)} aria-label="Close"></button>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={() => setModalVisible(false)}
+                aria-label="Close"
+              ></button>
             </div>
             <div className="modal-body">
               <CForm onSubmit={handleSubmit}>
-                <CRow className='mt-3'>
+                <CRow className="mt-3">
                   <CCol md={6}>
                     <CFormSelect
                       name="vehicleBrand"
@@ -247,8 +281,10 @@ const VehicleRegistration = () => {
                       required
                     >
                       <option value="">Seleccione una marca</option>
-                      {brands.map((brand) => (
-                        <option key={brand.id} value={brand.name}>{brand.name}</option>
+                      {brands.map((brand, index) => (
+                        <option key={`brand-${brand.id}-${index}`} value={brand.name}>
+                          {brand.name}
+                        </option>
                       ))}
                     </CFormSelect>
                   </CCol>
@@ -261,13 +297,15 @@ const VehicleRegistration = () => {
                       required
                     >
                       <option value="">Seleccione un modelo</option>
-                      {models.map((model) => (
-                        <option key={model.id} value={model.name}>{model.name}</option>
+                      {models.map((model, index) => (
+                        <option key={`model-${model.id}-${index}`} value={model.name}>
+                          {model.name}
+                        </option>
                       ))}
                     </CFormSelect>
                   </CCol>
                 </CRow>
-                <CRow className='mt-3'>
+                <CRow className="mt-3">
                   <CCol md={6}>
                     <CFormInput
                       type="number"
@@ -291,7 +329,7 @@ const VehicleRegistration = () => {
                     />
                   </CCol>
                 </CRow>
-                <CRow className='mt-3'>
+                <CRow className="mt-3">
                   <CCol md={6}>
                     <CFormInput
                       type="text"
@@ -315,7 +353,7 @@ const VehicleRegistration = () => {
                     />
                   </CCol>
                 </CRow>
-                <CRow className='mt-3'>
+                <CRow className="mt-3">
                   <CCol md={6}>
                     <CFormInput
                       type="text"
@@ -351,7 +389,7 @@ const VehicleRegistration = () => {
         </div>
       </div>
     </CContainer>
-  );
-};
+  )
+}
 
-export default VehicleRegistration;
+export default VehicleRegistration

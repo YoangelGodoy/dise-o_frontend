@@ -1,5 +1,5 @@
 export const helpFetch = () => {
-    const URL = "https://json-prefec-1.onrender.com/";
+    const URL = "http://localhost:3004/"; // Asegúrate de que este archivo esté en la raíz del servidor
 
     const customFetch = (endpoint, options = {}) => {
         options.method = options.method || "GET";
@@ -11,13 +11,15 @@ export const helpFetch = () => {
             options.body = JSON.stringify(options.body);
         }
 
-        return fetch(`${URL}${endpoint}`, options).then(response => {
-            return response.ok ? response.json() : Promise.reject({
-                error: true,
-                status: response.status,
-                statusText: response.statusText
-            });
-        }).catch(error => error);
+        return fetch(`${URL}${endpoint}`, options)
+            .then(response => {
+                return response.ok ? response.json() : Promise.reject({
+                    error: true,
+                    status: response.status,
+                    statusText: response.statusText
+                });
+            })
+            .catch(error => error);
     };
 
     const get = (endpoint) => customFetch(endpoint);

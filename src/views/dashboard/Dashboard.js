@@ -18,13 +18,10 @@ import {
   cilPeople,
   cilUser,
   cilBell,
-  cilHome,
   cilFile,
   cilChart,
   cilSpeedometer,
   cilStar,
-  cilArrowTop,
-  cilPaperPlane,
   cilPaperclip,
   cilCarAlt,
 } from "@coreui/icons"
@@ -175,37 +172,6 @@ const Dashboard = () => {
       },
     ],
   }
-
-  const lineData = {
-    labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-    datasets: [
-      {
-        label: "Ciudadanos",
-        data: [120, 132, 145, 150, 148, stats.citizens],
-        borderColor: "#36A2EB",
-        backgroundColor: "rgba(54, 162, 235, 0.1)",
-        fill: true,
-        tension: 0.4,
-        pointBackgroundColor: "#36A2EB",
-        pointBorderColor: "#fff",
-        pointBorderWidth: 3,
-        pointRadius: 6,
-      },
-      {
-        label: "Vehículos",
-        data: [65, 72, 81, 89, 85, stats.vehicles],
-        borderColor: "#4BC0C0",
-        backgroundColor: "rgba(75, 192, 192, 0.1)",
-        fill: true,
-        tension: 0.4,
-        pointBackgroundColor: "#4BC0C0",
-        pointBorderColor: "#fff",
-        pointBorderWidth: 3,
-        pointRadius: 6,
-      },
-    ],
-  }
-
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -213,7 +179,7 @@ const Dashboard = () => {
       legend: {
         position: "top",
         labels: {
-          usePointStyle: true,
+          usePointStyle: false,
           padding: 20,
           font: {
             size: 12,
@@ -280,7 +246,7 @@ const Dashboard = () => {
   }
 
   // Componente de Card Mejorada
-  const StatsCard = ({ title, value, subtitle, color, icon, link, trend }) => (
+  const StatsCard = ({ link, title, value, subtitle, color, icon, }) => (
     <CCol sm={6} lg={4} className="mb-4">
       <CCard className={`stats-card border-0 shadow-lg h-100 card-hover bg-gradient-${color}`}>
         <CCardBody className="p-4">
@@ -290,13 +256,6 @@ const Dashboard = () => {
                 <CIcon icon={icon} size="xl" />
               </div>
             </div>
-            {trend && (
-              <div className="trend-indicator">
-                <CBadge color="success" className="trend-badge">
-                  <CIcon icon={cilArrowTop} size="sm" className="me-1" />+{trend}%
-                </CBadge>
-              </div>
-            )}
           </div>
 
           <div className="stats-content text-white">
@@ -318,13 +277,6 @@ const Dashboard = () => {
                 className="progress-modern"
               />
             </div>
-
-            <Link to={link} className="text-decoration-none">
-              <CButton color="light" size="sm" className="btn-modern w-100 text-dark fw-semibold">
-                <CIcon icon={icon} className="me-2" />
-                Ver Detalles
-              </CButton>
-            </Link>
           </div>
         </CCardBody>
       </CCard>
@@ -400,8 +352,6 @@ const Dashboard = () => {
           subtitle="Ciudadanos Registrados"
           color="info"
           icon={cilPeople}
-          link="/ciudadano"
-          trend={8}
         />
         <StatsCard
           title="Vehículos"
@@ -409,8 +359,6 @@ const Dashboard = () => {
           subtitle="Vehículos Registrados"
           color="success"
           icon={cilCarAlt}
-          link="/vehicle"
-          trend={12}
         />
         <StatsCard
           title="Usuarios"
@@ -418,8 +366,6 @@ const Dashboard = () => {
           subtitle="Usuarios del Sistema"
           color="warning"
           icon={cilUser}
-          link="/users"
-          trend={5}
         />
         <StatsCard
           title="Citaciones"
@@ -427,7 +373,6 @@ const Dashboard = () => {
           subtitle="Solicitudes de Citación"
           color="danger"
           icon={cilBell}
-          link="/listCitation"
         />
         <StatsCard
           title="Permisos"
@@ -435,7 +380,6 @@ const Dashboard = () => {
           subtitle="Permisos de Mudanza"
           color="primary"
           icon={cilPaperclip}
-          link="/listMovingPermit"
         />
         <StatsCard
           title="Constancias"
@@ -443,8 +387,6 @@ const Dashboard = () => {
           subtitle="Constancias Emitidas"
           color="dark"
           icon={cilFile}
-          link="/listCertificates"
-          trend={3}
         />
       </CRow>
 

@@ -86,6 +86,17 @@
       "password": "123",
       "rol_id": "1",
       "updated_at": "2024-11-17T04:24:01.584Z"
+    },
+    {
+      "id": "1731817388656",
+      "idCard": "30782050",
+      "name": "Yoangel",
+      "lastName": "Godoy",
+      "phone": "04147287332",
+      "email": "yoangelagodoych201104@gmail.com",
+      "password": "123",
+      "rol_id": "1",
+      "updated_at": "2024-11-17T04:24:01.584Z"
     }
   ],
   "nationalities": [
@@ -339,17 +350,6 @@
       "telefono": "04147287332",
       "created_at": "2025-01-19T16:21:00.391Z",
       "updated_at": "2025-01-19T16:21:22.175Z"
-    },
-    {
-      "id": "1738343458486",
-      "cedula": "30782050",
-      "nombre": "Noelia",
-      "apellido": "Chacon",
-      "fecha_nacimiento": "2025-01-09",
-      "direccion": "michelena",
-      "telefono": "04147187332",
-      "created_at": "2025-01-31T17:10:58.486Z",
-      "updated_at": "2025-01-31T17:10:58.486Z"
     }
   ],
   "prefecture": [
@@ -486,17 +486,17 @@
   ],
   "vehicles": [
     {
-      "id": "1738348797669",
+      "id": "1751907124338",
       "vehicleBrand": "Ford",
       "vehicleModel": "Triton 350",
-      "vehicleYear": "1982",
+      "vehicleYear": "2005",
       "vehicleColor": "rojo",
       "vehicleClass": "camion",
       "vehiclePlate": "22RTAG",
       "engineSerial": "asdsa5d1sa651d",
       "chassisSerial": "asd15sa61dsa2",
-      "created_at": "2025-01-31T18:39:57.669Z",
-      "updated_at": "2025-01-31T18:39:57.669Z"
+      "created_at": "2025-07-07T16:52:04.338Z",
+      "updated_at": "2025-07-07T16:52:04.338Z"
     }
   ],
   "movingPermits": [

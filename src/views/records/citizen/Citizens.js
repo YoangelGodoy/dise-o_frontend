@@ -181,7 +181,7 @@ const ACitizens = () => {
             </CCardHeader>
             <CCardBody>
               <CTable hover responsive className='custom-table'>
-                <CTableHead className="table-light">
+                <CTableHead>
                   <CTableRow>
                     <CTableHeaderCell>Cédula</CTableHeaderCell>
                     <CTableHeaderCell>Nombre</CTableHeaderCell>
